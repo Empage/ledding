@@ -33,3 +33,5 @@ uploadfs:
 # update platforms and libraries via platformio (no target involvement)
 update:
 	platformio -f -c vim update
+
+tmp: upload

@@ -5,6 +5,8 @@ clang
 
 -I/home/mph/workspace/ledding/include
 -I/home/mph/workspace/ledding/src
+-I/home/mph/workspace/ledding/.pio/libdeps/esp32dev/FastLED_ID126
+-I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/app_trace
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/app_update
@@ -80,7 +82,6 @@ clang
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SD/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SD_MMC/src
--I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SimpleBLE/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src
