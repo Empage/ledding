@@ -13,6 +13,7 @@ int button_state = 0;
 
 void simpleLEDTest();
 void runningLightTest();
+void crazyLightTest();
 
 void setup() {
 	FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -30,6 +31,7 @@ void setup() {
 void loop() {
 	runningLightTest();
 //	simpleLEDTest();
+//	crazyLightTest();
 
 	EVERY_N_MILLISECONDS(200) {
 		button_state = digitalRead(BUTTON_PIN);
@@ -63,27 +65,59 @@ void simpleLEDTest() {
 }
 
 uint16_t i = 0;
-int8_t speed = 1;
+int8_t speed = 2;
 void runningLightTest() {
-	fadeToBlackBy(leds, NUM_LEDS, 10);
+	fadeToBlackBy(leds, NUM_LEDS, 20);
+
+	Serial.printf("i: %d", i);
+	if (speed > 0 && i >= NUM_LEDS) {
+		speed *= -1;
+	} else if (speed < 0 && i == 0) {
+		speed *= -1;
+	}
+
 	if (speed > 0) {
 //		fadeToBlackBy(leds, i, 10);
-		leds[i] += CRGB::Red;
+		for (int j = i; j < i + speed; j++) {
+			leds[j] += CRGB::Red;
+		}
 	} else {
 //		Serial.printf("i: %d, other: %d\n", i, NUM_LEDS - i);
 //		fadeToBlackBy(leds + i, NUM_LEDS - i , 10);
-		leds[i] += CRGB::Blue;
+		for (int j = i + speed; j < i; j++) {
+			leds[j] += CRGB::Blue;
+		}
 	}
+
 	i += speed;
-	if (i >= 148) {
-		speed = -1;
-	} else if (i == 1 && speed < 0) {
-		speed = 1;
-	}
 
 	FastLED.show();
-	delayMicroseconds(100);
+	FastLED.delay(1);
 }
 
-void energyTest() {
+/* blocking */
+uint8_t hue;
+/* 16 is quarter note */
+uint8_t timeouts[] {
+	32, 16, 16, 32, 16
+};
+int speed_scaler = 12;
+uint8_t colors[] {
+	HUE_RED, HUE_GREEN, HUE_RED, HUE_RED, HUE_GREEN
+};
+void crazyLightTest() {
+	for (int j = 0; j < 1000; j++) {
+		for (int k = 0; k < NUM_LEDS; k++) {
+			uint8_t value = random(256);
+			if (k % 2 == j % 2) {
+				leds[k] = CHSV( HUE_BLUE, 255, value);
+			} else {
+				leds[k] = CRGB::Black;
+			}
+		}
+
+//		timeout = random(200, 400);
+		FastLED.delay(timeouts[j % 5] * speed_scaler);
+	}
 }
+
