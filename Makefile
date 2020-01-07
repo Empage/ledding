@@ -5,18 +5,22 @@ all: build
 # build project
 # -f: --force, accept any confirmation prompts
 build:
-	platformio -f -c vim run
+	platformio -c vim run
+	#platformio -f -c vim run
 
 debug:
-	platformio -f -c vim run --target debug
+	platformio -c vim run --target debug
+	#platformio -f -c vim run --target debug
 
 # build and upload (if no errors)
 upload:
-	platformio -f -c vim run --target upload
+	platformio -c vim run --target upload
+	#platformio -f -c vim run --target upload
 
 # clean compiled objects
 clean:
-	platformio -f -c vim run --target clean
+	platformio  -c vim run --target clean
+	#platformio -f -c vim run --target clean
 
 # upload using programmer
 program:
