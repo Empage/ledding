@@ -18,8 +18,13 @@ RAM | 320 KiB
     1. 30 LED per meter, and
     1. 60 LED per meter
 
-## Notes
-1. Writing one pixel takes ~30 µs (tbc)
+## LED timing (WS2812B)
+1. Writing one bit takes `1.25 µs`
+1. Writing one pixel takes `30 µs`
+```
+24 bits per Pixel --> `24 * 1.25 µs = 30 µs
+```
+1. Writing 5m stripe of 30 LED/m takes `4500 µs = 4.5 ms`
 
 ## TODO
 1. Add 200 Ohm Resistor on Data to GND

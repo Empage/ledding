@@ -34,4 +34,6 @@ uploadfs:
 update:
 	platformio -f -c vim update
 
-tmp: upload
+tmp: build
+
+tmp2: upload

@@ -4,9 +4,13 @@
 #include <FastLED.h>
 
 #include "config.h"
+#include "animator.h"
 
 // Define the array of leds
 CRGB leds[NUM_LEDS];
+
+Animator animator;
+EffectBolt bolts[50];
 
 uint8_t brightness = 150;
 int button_state = 0;
@@ -14,9 +18,10 @@ int button_state = 0;
 void simpleLEDTest();
 void runningLightTest();
 void crazyLightTest();
+void startBolts();
 
 void setup() {
-	FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
+	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
 	FastLED.setBrightness(brightness);
 
 	pinMode(BUTTON_PIN, INPUT_PULLUP);
@@ -26,12 +31,22 @@ void setup() {
 
 	Serial.printf("Hello World!\n");
 #endif
+
+	for (int i = 0; i < 50; i++) {
+		animator.addEffect(bolts + i);
+	}
 }
 
 void loop() {
-	runningLightTest();
+//	runningLightTest();
 //	simpleLEDTest();
 //	crazyLightTest();
+
+	startBolts();
+	Serial.println("Go!");
+
+	while (animator.runStateMachine());
+	Serial.println("Done!");
 
 	EVERY_N_MILLISECONDS(200) {
 		button_state = digitalRead(BUTTON_PIN);
@@ -121,3 +136,18 @@ void crazyLightTest() {
 	}
 }
 
+void startBolts() {
+	for (int i = 0; i < 50; i++) {
+		uint16_t start = random(NUM_LEDS);
+		int8_t dir = random(2);
+		int8_t speed = random(3) + 2;
+		uint16_t delay = random(300);
+		uint8_t color = random(256);
+
+		if (dir) {
+			speed *= -1;
+		}
+
+		bolts[i].configure(start, speed, CHSV(color, 255, 255), delay);
+	}
+}
