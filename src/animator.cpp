@@ -8,7 +8,7 @@ Animator::Animator() {
 
 bool Animator::runStateMachine() {
 	bool stillEffecting = false;
-	fadeToBlackBy(leds, NUM_LEDS, 30);
+	fadeToBlackBy(leds, NUM_LEDS, 64);
 
 	for (int i = 0; i < idx; i++) {
 		if (effects[i]->running) {

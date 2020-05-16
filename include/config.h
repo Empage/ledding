@@ -17,6 +17,9 @@
 /*! \brief Resolution of the state machine (i.e. the delay each round) in ms */
 #define STATE_MACHINE_RES 10
 
+/*! \brief Default global brightness to start with */
+#define DEF_GLOBAL_BRIGHTNESS 127
+
 
 /* tmp */
 #define MIC_PIN 13

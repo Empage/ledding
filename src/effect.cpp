@@ -9,10 +9,14 @@ EffectBolt::EffectBolt() :
 }
 
 void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t delay = 0) {
+//	if (running) {
+//	}
+
 	this->idx = startled;
 	this->speed = speed;
 	this->color = color;
 	this->delay = delay;
+
 
 	running = true;
 

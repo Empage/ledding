@@ -10,9 +10,9 @@
 CRGB leds[NUM_LEDS];
 
 Animator animator;
-EffectBolt bolts[50];
+EffectBolt bolts[100];
 
-uint8_t brightness = 150;
+uint8_t brightness = DEF_GLOBAL_BRIGHTNESS;
 int button_state = 0;
 
 void simpleLEDTest();
@@ -23,6 +23,7 @@ void startBolts();
 void setup() {
 	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
 	FastLED.setBrightness(brightness);
+	FastLED.setDither();
 
 	pinMode(BUTTON_PIN, INPUT_PULLUP);
 
@@ -32,30 +33,43 @@ void setup() {
 	Serial.printf("Hello World!\n");
 #endif
 
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 100; i++) {
 		animator.addEffect(bolts + i);
 	}
+
+	startBolts();
 }
+
 
 void loop() {
 //	runningLightTest();
-//	simpleLEDTest();
+	simpleLEDTest();
 //	crazyLightTest();
 
-	startBolts();
-	Serial.println("Go!");
 
-	while (animator.runStateMachine());
-	Serial.println("Done!");
+#if 0
+	animator.runStateMachine();
 
 	EVERY_N_MILLISECONDS(200) {
 		button_state = digitalRead(BUTTON_PIN);
 		if (button_state == LOW) {
-			brightness += 16;
-			FastLED.setBrightness(brightness);
-			Serial.printf("Brightness: %d\n", brightness);
+//			brightness += 16;
+//			FastLED.setBrightness(brightness);
+//			Serial.printf("Brightness: %d\n", brightness);
+
+			uint16_t start = random(NUM_LEDS);
+			int8_t dir = random(2);
+			int8_t speed = random(3) + 2;
+			uint8_t color = random(256);
+
+			if ((dir && start > 10) || start > NUM_LEDS - 10) {
+				speed *= -1;
+			}
+
+			bolts[99].configure(start, speed, CHSV(color, 255, 255), 0);
 		}
 	}
+#endif
 }
 
 void simpleLEDTest() {
@@ -74,9 +88,16 @@ void simpleLEDTest() {
   FastLED.show();
   delay(500);
 #endif
-  FastLED.showColor(CRGB::White);
-  delay(10);
-
+	FastLED.showColor(CRGB::White);
+	delay(10);
+	EVERY_N_MILLISECONDS(200) {
+		button_state = digitalRead(BUTTON_PIN);
+		if (button_state == LOW) {
+			brightness += 16;
+			FastLED.setBrightness(brightness);
+			Serial.printf("Brightness: %d\n", brightness);
+		}
+	}
 }
 
 uint16_t i = 0;
@@ -137,7 +158,7 @@ void crazyLightTest() {
 }
 
 void startBolts() {
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 99; i++) {
 		uint16_t start = random(NUM_LEDS);
 		int8_t dir = random(2);
 		int8_t speed = random(3) + 2;
