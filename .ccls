@@ -5,7 +5,11 @@ clang
 
 -I/home/mph/workspace/ledding/include
 -I/home/mph/workspace/ledding/src
--I/home/mph/workspace/ledding/.pio/libdeps/esp32dev/FastLED_ID126
+-I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src
+-I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/FS/src
+-I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src
+-I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/Update/src
+-I/home/mph/workspace/ledding/.pio/libdeps/cable/FastLED_ID126
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/app_trace
@@ -75,7 +79,6 @@ clang
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/ESP32/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/ESPmDNS/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/FFat/src
--I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/FS/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdate/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/NetBIOS/src
@@ -85,19 +88,16 @@ clang
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/SimpleBLE/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src
--I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/Update/src
--I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src
--I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src
 -I/home/mph/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src
--I/home/mph/.platformio/packages/toolchain-xtensa32/xtensa-esp32-elf/include
 -I/home/mph/.platformio/packages/toolchain-xtensa32/xtensa-esp32-elf/include/c++/5.2.0
 -I/home/mph/.platformio/packages/toolchain-xtensa32/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf
 -I/home/mph/.platformio/packages/toolchain-xtensa32/lib/gcc/xtensa-esp32-elf/5.2.0/include-fixed
 -I/home/mph/.platformio/packages/toolchain-xtensa32/lib/gcc/xtensa-esp32-elf/5.2.0/include
+-I/home/mph/.platformio/packages/toolchain-xtensa32/xtensa-esp32-elf/include
 -I/home/mph/.platformio/packages/tool-unity
 
--DPLATFORMIO=40100
+-DPLATFORMIO=40303
 -DARDUINO_ESP32_DEV
 -DESP32
 -DESP_PLATFORM

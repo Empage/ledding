@@ -5,6 +5,18 @@
 
 #include "config.h"
 
+#include "animator.h"
+#include "buttons.h"
+#include "ota.h"
+#include "effect.h"
+
+/*! \brief FastLED array for the current stripe values */
 extern CRGB leds[NUM_LEDS];
+
+extern Animator animator;
+extern Buttons buttons;
+extern Ota ota;
+extern EffectStatic myeffect;
+
 
 #endif /* end of include guard: GLOBALS_H */

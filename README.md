@@ -3,6 +3,28 @@ Ledding
 
 Fancy LED project
 
+<!-- vim-markdown-toc GFM -->
+
+* [Hardware](#hardware)
+    * [LED stripe WS2812B and WS2815](#led-stripe-ws2812b-and-ws2815)
+        * [Timing:](#timing)
+    * [Power considerations](#power-considerations)
+        * [WS2812B](#ws2812b)
+        * [WS2815](#ws2815)
+        * [Cabling](#cabling)
+    * [Level shifters](#level-shifters)
+* [Software](#software)
+    * [Installation](#installation)
+    * [Important commands](#important-commands)
+    * [Programming](#programming)
+* [Partyraum Installation](#partyraum-installation)
+* [Maite Installation](#maite-installation)
+    * [Box interfaces](#box-interfaces)
+    * [Buttons](#buttons)
+    * [TODO](#todo)
+
+<!-- vim-markdown-toc -->
+
 ## Hardware
 1. MCU is the ESP32
 
@@ -38,7 +60,7 @@ f = 1 / 9 ms ≈ 111 Hz
 ```
 
 ### Power considerations
-####WS2812B
+#### WS2812B
 For the 5V strips each LED pulls max. ~20 mA (realistic max is 15 mA) per color, so 60 mA (45 mA) per pixel.
 For 10 m of the 30 px/m stripe, we have at maximum brightness
 ```
@@ -51,7 +73,7 @@ I_r5 = 10 m * 30 px/m * 45 mA/px = 13.5 A
 P_r5 = 13.5 A * 5V = 67.5 W
 ```
 
-####WS2815
+#### WS2815
 For the 12V strips each LED pulls max. 15 mA per color, but also max. 15 mA for the full pixel (they are in series). Power is burnt for non-white.
 For 10 m of the 30 LED/m stripe, we have at maximum brightness
 ```
@@ -59,7 +81,7 @@ I_r12 = 10 m * 30 px/m * 15 mA/px = 4.5 A
 P_r12 = 15 A * 12V = 54 W
 ```
 
-####Cabling
+#### Cabling
 For the cable the resistance is
 ```
 R = l / (\kappa * A)
@@ -90,10 +112,38 @@ Available (should be fast enough):
 - TXB0108 (eight channel bi-directional)
 
 ## Software
+### Installation
 This project uses platformio (https://platformio.org/) as its build system.
+To install platformio, download and execute the `get-plaformio.py` script
+```
+wget https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py -O get-platformio.py
+python3 get-platformio.py
+```
+
+Install dependencies with pio:
+
+```
+pio lib install "FastLED"
+```
+
+To be able to upload, the user needs to be able to open the USB device, thus being in the `dialout` group
+```
+sudo usermod -aG dialout <user>
+```
+
+### Important commands
 Important platformio commands (next to those in the Makefile which are described there):
 
-1. Serial console: `pio device monitor -b 115200`
+Start serial console:
+```
+pio device monitor -b 115200
+```
+
+Generate `compile_commands.json`:
+```
+platformio run --target compiledb
+mv .pio/build/ota/compile_commands.json .
+```
 
 ### Programming
 To program the ESP32, issue `make upload`, then hold down the `BOOT` button on the ESP32-board until the upload starts.
@@ -113,6 +163,54 @@ Theoretically, we need
 ```
 
 The Meanwell LRS-200-12 is a good fit.
+
+## Maite Installation
+LED stripes WS2812B
+```
+5 m * 30 px/m = 150 px
+```
+Power consumption (realistic maximum)
+```
+I_r5 = 5 m * 30 px/m * 45 mA/px = 6.75 A
+P_r5 = 6.75 A * 5V = 33.75 W
+```
+
+Cable is J-Y(ST)Y:
+```
+R_0.6 = 12 m / 57.18 (m / (\ohm * mm^2)) / 0.6 mm^2 ≈ 0.350 \Ohm
+R_1.2 = 12 m / 57.18 (m / (\ohm * mm^2)) / 1.2 mm^2 ≈ 0.175 \Ohm
+```
+Assuming to power half of the LED strip:
+```
+I = 2.5 m * 30 px/m * 45 mA = 3.375 A
+U_0.6 = 0.350 * 3.375 A = 1.181 V
+U_1.2 = 0.175 * 3.375 A = 0.591 V
+```
+
+### Box interfaces
+- Power Input
+- µUSB
+- Led OUT 5-port:
+    - Data
+    - GND front
+    - VCC front
+    - GND back
+    - VCC back
+- Status LED
+- 3 Buttons
+- Power switch
+- 2 Potis for speed and brightness
+
+### Buttons
+1. Brightness +
+2. Brightness -
+3. Speed +
+4. Speed -
+5. Color next
+6. Color prev
+7. Mode next
+8. Mode prev
+
 
 ### TODO
 1. Add 200 Ohm Resistor on Data to GND

@@ -3,14 +3,7 @@
 
 #include "effect.h"
 
-EffectBolt::EffectBolt() :
-	running(false)
-{
-}
-
 void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t delay = 0) {
-//	if (running) {
-//	}
 
 	this->idx = startled;
 	this->speed = speed;
@@ -25,7 +18,6 @@ void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t
 }
 
 bool EffectBolt::calcStep() {
-//	Serial.printf("idx: %d\n", this->idx);
 
 	if (delay) {
 		delay--;
@@ -34,12 +26,10 @@ bool EffectBolt::calcStep() {
 
 	if (speed > 0) {
 		for (int j = idx; j < idx + speed && j < NUM_LEDS; j++) {
-//			Serial.printf("HERE1: j: %d\n", j);
 			leds[j] += color;
 		}
 	} else {
 		for (int j = idx + speed; j < idx && j >= 0; j++) {
-//			Serial.printf("HERE2: j: %d\n", j);
 			leds[j] += color;
 		}
 	}
@@ -54,4 +44,42 @@ bool EffectBolt::calcStep() {
 	}
 
 	return false;
+}
+
+void EffectStatic::configure(CRGB color) {
+	this->color = color;
+
+	running = true;
+	is_new_color = true;
+}
+
+bool EffectStatic::calcStep() {
+	for (int i = 0; i < NUM_LEDS; i++) {
+		leds[i] = color;
+	}
+
+	if (is_new_color) {
+		is_new_color = false;
+		return true;
+	}
+
+	return false;
+}
+
+void EffectStatic::nextColor() {
+	if (++coloridx >= COLOR_PALETTE_SIZE) {
+		coloridx = 0;
+	}
+	color = COLOR_PALETTE[coloridx];
+	is_new_color = true;
+	Serial.printf("Next color: %d\n", coloridx);
+}
+
+void EffectStatic::prevColor() {
+	if (--coloridx <= 0) {
+		coloridx = COLOR_PALETTE_SIZE - 1;
+	}
+	color = COLOR_PALETTE[coloridx];
+	is_new_color = true;
+	Serial.printf("Prev color: %d\n", coloridx);
 }
