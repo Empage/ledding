@@ -1,0 +1,31 @@
+---
+- name: Updating Packages
+  apt:
+    name: "*"
+    state: latest
+
+- name: Installing Basic Packages
+  apt:
+    pkg:
+      - git
+      - vim
+      - python-pip
+
+- name: Installing platformio
+  pip:
+    name: platformio
+
+- name: Cloning Git Repository ledding
+  git:
+    repo: 'https://github.com/superbjorn09/ledding'
+    dest: /home/pi/ledding
+    force: yes
+
+
+- name: Setting up permissions
+  file:
+    path: /home/pi/ledding
+    owner: pi
+    group: pi
+    mode: "0755"
+    recurse: yes
