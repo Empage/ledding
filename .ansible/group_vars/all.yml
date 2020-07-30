@@ -43,7 +43,7 @@ lan_static:
 #  |     `security.psk`: the "password" for the network
 #  |                     (ignored if security.enabled == False)
 #  |
-ssid: music-station
+ssid: musicstation
 channel: 6
 
 security:
