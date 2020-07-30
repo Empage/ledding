@@ -12,6 +12,7 @@ iface {{ lan_adapter }} inet static
   address {{ lan_static.address }}
   netmask {{ lan_static.netmask }}
   gateway {{ lan_static.gateway }}
+  dns-nameservers {{ lan_static.nameservers }}
 {% else %}
 iface {{ lan_adapter }} inet manual
 {% endif %}
