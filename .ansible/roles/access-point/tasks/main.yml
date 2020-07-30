@@ -3,8 +3,8 @@
   hostname:
     name: "{{ hostname }}"
  
- - name: Unblock Wifi on rfkill Service
-   shell: rfkill unblock wifi
+- name: Unblock Wifi on rfkill Service
+  shell: rfkill unblock wifi
 
 - name: Install required software packages
   apt:
