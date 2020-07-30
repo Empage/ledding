@@ -45,30 +45,30 @@
     state: present
     reload: yes
 
-# - name: Setup iptables rules (1/3)
-#   iptables:
-#     state: present
-#     table: nat
-#     chain: POSTROUTING
-#     out_interface: "{{ lan_adapter }}"
-#     jump: MASQUERADE
+- name: Setup iptables rules (1/3)
+  iptables:
+    state: present
+    table: nat
+    chain: POSTROUTING
+    out_interface: "{{ lan_adapter }}"
+    jump: MASQUERADE
 
-# - name: Setup iptables rules (2/3)
-#   iptables:
-#     state: present
-#     chain: FORWARD
-#     in_interface: "{{ lan_adapter }}"
-#     out_interface: "{{ wifi_adapter }}"
-#     ctstate: RELATED,ESTABLISHED
-#     jump: ACCEPT
+- name: Setup iptables rules (2/3)
+  iptables:
+    state: present
+    chain: FORWARD
+    in_interface: "{{ lan_adapter }}"
+    out_interface: "{{ wifi_adapter }}"
+    ctstate: RELATED,ESTABLISHED
+    jump: ACCEPT
 
-# - name: Setup iptables rules (3/3)
-#   iptables:
-#     state: present
-#     chain: FORWARD
-#     in_interface: "{{ wifi_adapter }}"
-#     out_interface: "{{ lan_adapter }}"
-#     jump: ACCEPT
+- name: Setup iptables rules (3/3)
+  iptables:
+    state: present
+    chain: FORWARD
+    in_interface: "{{ wifi_adapter }}"
+    out_interface: "{{ lan_adapter }}"
+    jump: ACCEPT
 
 - name: Install iptables rules
   template:
