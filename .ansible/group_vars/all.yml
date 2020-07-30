@@ -48,7 +48,7 @@ channel: 6
 
 security:
   enabled: True
-  psk: Dr.Mueller  # The "password" for the network (at least 8 characters)
+  psk: testtesttest  # The "password" for the network (at least 8 characters)
 
 
 # -|----------------------------------------------------------------------------
