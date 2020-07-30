@@ -8,7 +8,10 @@ iface lo inet loopback
 
 {% if lan_static and 'enabled' in lan_static and lan_static.enabled == True %}
 auto {{ lan_adapter }}
-iface {{ lan_adapter }} inet static
+iface {{ lan_adapter }} inet dhcp
+
+auto {{ lan_adapter }}:0
+iface {{ lan_adapter }}:0 inet static
   address {{ lan_static.address }}
   netmask {{ lan_static.netmask }}
   gateway {{ lan_static.gateway }}
