@@ -16,7 +16,10 @@ extern CRGB leds[NUM_LEDS];
 extern Animator animator;
 extern Buttons buttons;
 extern Ota ota;
-extern EffectStatic myeffect;
+extern EffectStatic staticEffect;
+
+void increaseBrightness();
+void decreaseBrightness();
 
 
 #endif /* end of include guard: GLOBALS_H */

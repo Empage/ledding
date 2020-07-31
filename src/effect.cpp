@@ -3,15 +3,22 @@
 
 #include "effect.h"
 
+void Effect::nextColor() {
+}
+void Effect::prevColor() {
+}
+void Effect::incIntensity() {
+}
+void Effect::decIntensity() {
+}
+
+/*********************** Effect Bolt *************************/
 void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t delay = 0) {
 
 	this->idx = startled;
 	this->speed = speed;
 	this->color = color;
 	this->delay = delay;
-
-
-	running = true;
 
 	Serial.printf("Configure led: %d, speed: %d, delay: %d\n", idx, this->speed, this->delay);
 	calcStep();
@@ -39,31 +46,30 @@ bool EffectBolt::calcStep() {
 	if ((speed > 0 && idx >= NUM_LEDS) || (speed < 0 && idx <= 0)) {
 		/* bolt reached end of strip, effect done */
 		Serial.printf("Effect done!\n");
-		running = false;
 		return true;
 	}
 
 	return false;
 }
 
+/*********************** Effect Static *************************/
 void EffectStatic::configure(CRGB color) {
 	this->color = color;
 
-	running = true;
 	is_new_color = true;
 }
 
 bool EffectStatic::calcStep() {
+	if (!is_new_color) {
+		return false;
+	}
+
 	for (int i = 0; i < NUM_LEDS; i++) {
 		leds[i] = color;
 	}
 
-	if (is_new_color) {
-		is_new_color = false;
-		return true;
-	}
-
-	return false;
+	is_new_color = false;
+	return true;
 }
 
 void EffectStatic::nextColor() {

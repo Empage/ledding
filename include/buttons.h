@@ -40,6 +40,11 @@ private:
 	/*! \brief Remember the intermediate buttons states */
 	BUTTON_STATE button_states[TOUCH_BUTTON_COUNT] = {UNPRESSED};
 
+#ifdef DEV_MODE
+	/*! \brief Slow down dev button presses, too */
+	int dev_button_state = 0;
+#endif
+
 	/*! \brief Activate the associated action
 	 *
 	 * \param button_pin the button define

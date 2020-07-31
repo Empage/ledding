@@ -178,3 +178,9 @@ bool Animator::runEffects(bool fade) {
 
 	return stillEffecting;
 }
+
+void Animator::runSoundEffect() {
+	for (int i = 0; i < NUM_LEDS; i++) {
+		leds[i] = i % 2 ? CRGB::Green : CRGB::Blue;
+	}
+}

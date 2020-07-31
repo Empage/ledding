@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include <FastLED.h>
 
-/* include global instances of leds, animator, buttons and ota */
+/* include global instances of leds, animator, buttons, ota and effects */
 #include "globals.h"
 
 void setup() {
@@ -11,20 +11,18 @@ void setup() {
 	FastLED.setBrightness(DEF_GLOBAL_BRIGHTNESS);
 	FastLED.setDither();
 
-	//TODO [MPH]
-	pinMode(2, OUTPUT);
+	pinMode(BUILTIN_LED, OUTPUT);
 
 #ifdef SERIAL_PRINT
 	Serial.begin(115200);
 #endif
 
-	myeffect.configure(CRGB::Blue);
-	animator.addEffect(Animator::ANIMATOR_CONSTANT, &myeffect);
+	/* setup the effects */
+	staticEffect.configure(CRGB::DeepPink);
+	animator.addEffect(Animator::ANIMATOR_CONSTANT, &staticEffect);
 
-	//TODO [MPH]
-	/* turn off builtin LED */
-	digitalWrite(2, HIGH);
-	Serial.printf("COLOR_PALETTE_SIZE: %d\n", COLOR_PALETTE_SIZE);
+	/* turn on builtin LED */
+//	digitalWrite(BUILTIN_LED, HIGH);
 
 	ota.init();
 }

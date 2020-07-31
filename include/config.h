@@ -36,6 +36,10 @@ extern const char* OTA_PW;
 /*! \brief GPIO on which the data signal of the WS2812B is connected */
 #define LED_DATA_PIN 23
 
+
+/*! \brief GPIO for the built-in LED */
+#define BUILTIN_LED 2
+
 /*! \brief Touch button definitions
  *
  * Layout on Maites version:

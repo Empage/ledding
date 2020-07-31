@@ -52,8 +52,17 @@ void Buttons::handleButtons() {
 
 #ifdef DEV_MODE
 	if (digitalRead(DEV_BUTTON_PIN) == LOW) {
-		Serial.printf("Activate dev button\n");
-		activate(DEV_BUTTON_PIN);
+		if (dev_button_state == 0) {
+			Serial.printf("Activate dev button\n");
+			activate(DEV_BUTTON_PIN);
+			dev_button_state++;
+		} else if (dev_button_state >= 5) {
+			dev_button_state = 0;
+		} else {
+			dev_button_state++;
+		}
+	} else {
+		dev_button_state = 0;
 	}
 #endif
 }
@@ -66,81 +75,38 @@ void Buttons::activate(uint8_t button_pin) {
 
 	switch (button_pin) {
 		case BUTTON_BRT_INC: {
-			/* increase brightness */
-			uint8_t brightness = FastLED.getBrightness();
-			if (brightness < 255 - 16) {
-				brightness += 16;
-			} else {
-				brightness = 255;
-			}
-
-			FastLED.setBrightness(brightness);
-#ifdef SERIAL_PRINT
-			Serial.printf("New brightness: %d\n", brightness);
-#endif
+			increaseBrightness();
 			break;
 		}
 
 		case BUTTON_BRT_DEC: {
-			/* decrease brightness */
-			uint8_t brightness = FastLED.getBrightness();
-			if (brightness <= 16) {
-				brightness = 1;
-			} else {
-				brightness -= 16;
-			}
-
-			FastLED.setBrightness(brightness);
-#ifdef SERIAL_PRINT
-			Serial.printf("New brightness: %d\n", brightness);
-#endif
+			decreaseBrightness();
 			break;
 		}
 
-		case BUTTON_INTENSITY_INC: {
-			Serial.printf("HERE INTENSITY INC\n");
-			myeffect.nextColor();
+		case BUTTON_INTENSITY_INC:
+			animator.incIntensity();
 			break;
-		}
 
-		case BUTTON_INTENSITY_DEC: {
-			Serial.printf("HERE INTENSITY DEC\n");
-			myeffect.prevColor();
+		case BUTTON_INTENSITY_DEC:
+			animator.decIntensity();
 			break;
-		}
-		case BUTTON_COLOR_NEXT: {
-			myeffect.nextColor();
-			break;
-		}
-		case BUTTON_COLOR_PREV: {
-			myeffect.prevColor();
-			break;
-		}
 
-		case BUTTON_MODE_NEXT: {
-#if 0
-			if (animator.mode == Animator::ANIMATOR_CONSTANT) {
-				animator.mode = Animator::ANIMATOR_FADE;
-#ifdef SERIAL_PRINT
-			Serial.printf("New mode: Fade\n");
-#endif
-			} else {
-				animator.mode = Animator::ANIMATOR_CONSTANT;
-#ifdef SERIAL_PRINT
-			Serial.printf("New mode: Constant\n");
-#endif
-			}
-			/* iterate through available modes */
-#endif
-			Serial.printf("HERE MODE NEXT\n");
-			myeffect.nextColor();
+		case BUTTON_COLOR_NEXT:
+			animator.nextColor();
 			break;
-		}
-		case BUTTON_MODE_PREV: {
-			Serial.printf("HERE MODE PREV\n");
-			myeffect.prevColor();
+
+		case BUTTON_COLOR_PREV:
+			animator.prevColor();
 			break;
-		}
+
+		case BUTTON_MODE_NEXT:
+			animator.nextMode();
+			break;
+
+		case BUTTON_MODE_PREV:
+			animator.prevMode();
+			break;
 
 		default:
 			break;
