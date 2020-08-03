@@ -2,12 +2,13 @@
 
 all: build
 
-# build project
+# build project in release configuration
 build:
 	platformio -c vim run -e cable
 
+# build project in debug configuration
 debug:
-	platformio -c vim run -e cable --target debug
+	platformio -c vim run -e debug
 
 # build and upload (if no errors) using cable environment
 upload:
@@ -16,6 +17,10 @@ upload:
 # build and upload (if no errors) using over-the-air upload
 uploadOTA:
 	platformio -c vim run -e ota --target upload
+
+# build, upload via JTAG and start debugger
+debugJTAG:
+	pio debug --interface gdb -x .pioinit
 
 # clean compiled objects
 clean:

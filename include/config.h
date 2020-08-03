@@ -46,8 +46,15 @@ extern const char* OTA_PW;
  * BRT_INC   MODE_NEXT   COLOR_NEXT   INTENSITY_INC
  * BRT_DEC   MODE_NEXT   COLOR_PREV   INTENSITY_DEC
  *
+ * If using JTAG, one cannot use the GPIOs linked to that for touch (12 - 15).
+ * This will be handled in the Buttons class, here we only need to change the button count
  */
-#define TOUCH_BUTTON_COUNT    8
+#ifdef DEBUG_JTAG
+	#define TOUCH_BUTTON_COUNT    4
+#else
+	#define TOUCH_BUTTON_COUNT    8
+#endif
+
 #define BUTTON_BRT_INC       14
 #define BUTTON_BRT_DEC       27
 #define BUTTON_MODE_NEXT     15

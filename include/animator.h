@@ -48,7 +48,6 @@ public:
 
 private:
 	Effect* effects[ANIMATOR_MODE_SIZE] = {nullptr};
-	uint16_t idx = 0;
 };
 
 #endif /* end of include guard: ANIMATOR_H */

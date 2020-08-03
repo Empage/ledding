@@ -17,14 +17,13 @@ void Animator::addEffect(AnimatorMode mode, Effect* effect) {
 }
 
 void Animator::nextMode() {
-	//TODO [MPH] debug it
 	/* iterate through all modes beginning with the next one to look for a configured mode */
-	for (int i = mode; i < ANIMATOR_MODE_SIZE + mode; i++) {
-		if (effects[(i + 1) % ANIMATOR_MODE_SIZE] == nullptr) {
+	for (int i = 1; i < ANIMATOR_MODE_SIZE; i++) {
+		if (effects[(mode + i) % ANIMATOR_MODE_SIZE] == nullptr) {
 			continue;
 		}
 
-		mode = static_cast<AnimatorMode>((i + 1) % ANIMATOR_MODE_SIZE);
+		mode = static_cast<AnimatorMode>((mode + i) % ANIMATOR_MODE_SIZE);
 		return;
 	}
 
@@ -34,14 +33,23 @@ void Animator::nextMode() {
 }
 
 void Animator::prevMode() {
-	//TODO [MPH] still wrong
+	int remainder = 0;
+	int new_index = 0;
 	/* iterate through all modes beginning with the previous one to look for a configured mode */
-	for (int i = mode; i < ANIMATOR_MODE_SIZE + mode; i++) {
-		if (effects[(i + 1) % ANIMATOR_MODE_SIZE] == nullptr) {
+	for (int i = 1; i < ANIMATOR_MODE_SIZE; i++) {
+		/* negative wrap-around needs special care because e.g. `-1 % 5` is not `4` but rather `-1`,
+		 * that is apparently the difference between remainder and modulo */
+		remainder = ((int)mode - i) % ANIMATOR_MODE_SIZE;
+		if (remainder < 0) {
+			new_index = remainder + ANIMATOR_MODE_SIZE;
+		} else {
+			new_index = remainder;
+		}
+		if (effects[new_index] == nullptr) {
 			continue;
 		}
 
-		mode = static_cast<AnimatorMode>((i + 1) % ANIMATOR_MODE_SIZE);
+		mode = static_cast<AnimatorMode>(new_index);
 		return;
 	}
 

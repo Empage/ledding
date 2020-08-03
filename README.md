@@ -17,11 +17,16 @@ Fancy LED project
     * [Installation](#installation)
     * [Important commands](#important-commands)
     * [Programming](#programming)
-* [Partyraum Installation](#partyraum-installation)
-* [Maite Installation](#maite-installation)
+    * [Debugging using JTAG](#debugging-using-jtag)
+        * [Make the physical connection](#make-the-physical-connection)
+        * [One time setup configuration](#one-time-setup-configuration)
+        * [Start a debugging session](#start-a-debugging-session)
+* [Specifics for Partyraum Installation](#specifics-for-partyraum-installation)
+* [Specifics for Maite Installation](#specifics-for-maite-installation)
     * [Box interfaces](#box-interfaces)
     * [Buttons](#buttons)
-    * [TODO](#todo)
+* [TODO](#todo)
+* [Lessons learned](#lessons-learned)
 
 <!-- vim-markdown-toc -->
 
@@ -148,7 +153,83 @@ mv .pio/build/ota/compile_commands.json .
 ### Programming
 To program the ESP32, issue `make upload`, then hold down the `BOOT` button on the ESP32-board until the upload starts.
 
-## Partyraum Installation
+### Debugging using JTAG
+On-target debugging with GDB is possible using JTAG. I have the `FT4232H-56Q MiniModule` as the USB2JTAG adapter. The following steps are necessary:
+
+#### Make the physical connection
+| JTAG function | ESP32 pin | FT4232H pin |
+| ---------------------- | ------ | --- |
+| TDI (Test Data In)     | GPIO12 | AD1 |
+| TDO (Test Data Out)    | GPIO15 | AD2 |
+| TCK (Test Clock)       | GPIO13 | AD0 |
+| TMS (Test Mode Select) | GPIO14 | AD3 |
+| TRST (Test Reset)      | EN     | RT# |
+| GND                    | GND    | GND |
+
+Furthermore the jumpers on the MiniModule need to be set to provide the reference voltage.
+
+#### One time setup configuration
+This module is not recognized correctly by `OpenOCD` (Open On-Chip-Debugger) used by `platformio` which is why
+we need to tell it. Connect the MiniModule to USB and get the description and IDs:
+```
+$ pio device list
+
+/dev/ttyUSB3
+------------
+Hardware ID: USB VID:PID=0403:6011 SER=FT2AWE2C LOCATION=1-5:1.3
+Description: FT4232H-56Q MiniModule
+
+/dev/ttyUSB2
+------------
+Hardware ID: USB VID:PID=0403:6011 SER=FT2AWE2C LOCATION=1-5:1.2
+Description: FT4232H-56Q MiniModule
+
+/dev/ttyUSB1
+------------
+Hardware ID: USB VID:PID=0403:6011 SER=FT2AWE2C LOCATION=1-5:1.1
+Description: FT4232H-56Q MiniModule
+
+/dev/ttyUSB0
+------------
+Hardware ID: USB VID:PID=0403:6011 SER=FT2AWE2C LOCATION=1-5:1.0
+Description: FT4232H-56Q MiniModule
+```
+
+For this module, we need to add (or change the existing values) in `~/.platformio/packages/tool-openocd-esp32/share/openocd/scripts/interface/ftdi/minimodule.cfg`
+Add or change the following:
+```
+ftdi_device_desc "FT4232H-56Q MiniModule"
+ftdi_vid_pid 0x0403 0x6011
+```
+
+This should eliminate the following errors on a debug run
+```
+$ pio debug --interface gdb -x .pioinit
+
+[...]
+Error: no device found
+Error: unable to open ftdi device with vid 0403, pid 6011, description 'FT2232H MiniModule', serial '*' at bus location '*'
+```
+
+This is valid for the `debug_tool = minimodule` (see `platformio.ini`).
+We would only need to repeat those steps if the `platformio` update replaced this files with the originals again.
+
+#### Start a debugging session
+**Potential pitfall first**:
+The GPIOs for JTAG (12 - 15) are also used for touch buttons. When they are actually used for this functionality,
+the debugger cannot initiate the debugging session.
+TODO add error msg here
+
+That's why we must flash a firmware not using those buttons first using the normal flashing mechanisms. It can basically be any firmware because during beginning of the JTAG session the firmware to be debugged will be loaded anyway.
+
+Building a debug version of the firmware will define `DEBUG_JTAG` and hence not use those touch buttons, so `make debug` will work.
+
+To actually start a debugging session with GDB, use
+```
+pio debug --interface gdb -x .pioinit
+```
+
+## Specifics for Partyraum Installation
 LED stripes of
 - 2x 10 m
 - 4x  2 m
@@ -164,7 +245,7 @@ Theoretically, we need
 
 The Meanwell LRS-200-12 is a good fit.
 
-## Maite Installation
+## Specifics for Maite Installation
 LED stripes WS2812B
 ```
 5 m * 30 px/m = 150 px
@@ -212,6 +293,9 @@ U_1.2 = 0.175 * 3.375 A = 0.591 V
 8. Mode prev
 
 
-### TODO
-1. Add 200 Ohm Resistor on Data to GND
-1. Add capacitor on the power lines of the strip
+## TODO
+1. Add schematics
+1. Use ESP Log functions instead of serial directly for more finegrained logging
+
+## Lessons learned
+1. When creating a new environment in `platformio.ini`, one needs to reinstall the dependency libraries

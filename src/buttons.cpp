@@ -5,18 +5,20 @@
 #include "buttons.h"
 
 Buttons::Buttons() {
+#ifdef DEV_MODE
 	pinMode(DEV_BUTTON_PIN, INPUT_PULLUP);
+#endif
 }
 
 void Buttons::handleButtons() {
 #ifdef SERIAL_PRINT
-//	Serial.printf("Touch button readings:\n");
+	Serial.printf("Touch button readings:\n");
 #endif
 
 	for (int i = 0; i < TOUCH_BUTTON_COUNT; i++) {
 		uint16_t value = touchRead(buttons[i]);
 #ifdef SERIAL_PRINT
-//	Serial.printf("%02d ", value);
+	Serial.printf("%02d ", value);
 #endif
 
 		/* Reset if value is above TOUCH_BUTTON_THRESHOLD */
@@ -47,7 +49,7 @@ void Buttons::handleButtons() {
 	}
 
 #ifdef SERIAL_PRINT
-//	Serial.printf("\n");
+	Serial.printf("\n");
 #endif
 
 #ifdef DEV_MODE
