@@ -3,4 +3,6 @@
   hosts: raspberry
   remote_user: root
   roles:
+      - preinstall
       - common
+      - access-point

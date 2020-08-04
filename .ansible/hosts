@@ -1,2 +1,4 @@
 [raspberry]
-127.0.0.1
+10.2.0.10
+# insert the ip of the pi here
+# 127.0.0.1

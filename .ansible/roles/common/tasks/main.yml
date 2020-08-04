@@ -7,8 +7,6 @@
 - name: Installing Basic Packages
   apt:
     pkg:
-      - git
-      - vim
       - python-pip
       - python-alsaaudio
       - python-numpy
