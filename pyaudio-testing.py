@@ -1,8 +1,4 @@
 #!/usr/bin/python
-# import alsaaudio
-# print(alsaaudio.cards())
-
-
 # Python 2.7 code to analyze sound and interface with Arduino
 
 import pyaudio # from http://people.csail.mit.edu/hubert/pyaudio/
