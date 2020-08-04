@@ -13,9 +13,10 @@ public:
 	enum AnimatorMode {
 		ANIMATOR_CONSTANT,
 		ANIMATOR_BOLT,
+		ANIMATOR_ARC,
 		ANIMATOR_SERIAL,
 	};
-	static const int ANIMATOR_MODE_SIZE = 3;
+	static const int ANIMATOR_MODE_SIZE = 4;
 
 	explicit Animator();
 
@@ -44,7 +45,7 @@ public:
 	void decIntensity();
 
 	/* currently active mode */
-	AnimatorMode mode = ANIMATOR_CONSTANT;
+	AnimatorMode mode = ANIMATOR_BOLT;
 
 private:
 	Effect* effects[ANIMATOR_MODE_SIZE] = {nullptr};

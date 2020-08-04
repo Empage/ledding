@@ -20,9 +20,15 @@ void setup() {
 	/* setup the effects */
 	staticEffect.configure(CRGB::DeepPink);
 	animator.addEffect(Animator::ANIMATOR_CONSTANT, &staticEffect);
+	boltEffect.configure(0, 2, CRGB::Red, 10);
+	animator.addEffect(Animator::ANIMATOR_BOLT, &boltEffect);
+	arcEffect.configure(CRGB::Blue, CRGB::Green);
+	animator.addEffect(Animator::ANIMATOR_ARC, &arcEffect);
+
+	animator.mode = Animator::ANIMATOR_ARC;
 
 	/* turn on builtin LED */
-//	digitalWrite(BUILTIN_LED, HIGH);
+	digitalWrite(BUILTIN_LED, HIGH);
 
 	ota.init();
 }

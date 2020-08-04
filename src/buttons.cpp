@@ -103,11 +103,11 @@ void Buttons::activate(uint8_t button_pin) {
 			break;
 
 		case BUTTON_MODE_NEXT:
-			animator.nextMode();
+			increaseBrightness();
 			break;
 
 		case BUTTON_MODE_PREV:
-			animator.prevMode();
+			decreaseBrightness();
 			break;
 
 		default:

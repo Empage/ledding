@@ -17,6 +17,8 @@ extern Animator animator;
 extern Buttons buttons;
 extern Ota ota;
 extern EffectStatic staticEffect;
+extern EffectBolt boltEffect;
+extern EffectArc arcEffect;
 
 void increaseBrightness();
 void decreaseBrightness();

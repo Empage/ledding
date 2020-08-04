@@ -5,6 +5,8 @@ Animator animator;
 Buttons buttons;
 Ota ota;
 EffectStatic staticEffect;
+EffectBolt boltEffect;
+EffectArc arcEffect;
 
 void increaseBrightness() {
 	uint8_t brightness = FastLED.getBrightness();
@@ -19,6 +21,7 @@ void increaseBrightness() {
 	}
 
 	FastLED.setBrightness(brightness);
+	FastLED.show();
 #ifdef SERIAL_PRINT
 	Serial.printf("New brightness: %d\n", brightness);
 #endif
@@ -35,6 +38,7 @@ void decreaseBrightness() {
 	}
 
 	FastLED.setBrightness(brightness);
+	FastLED.show();
 #ifdef SERIAL_PRINT
 	Serial.printf("New brightness: %d\n", brightness);
 #endif

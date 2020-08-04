@@ -27,29 +27,45 @@ void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t
 bool EffectBolt::calcStep() {
 
 	if (delay) {
+		fadeToBlackBy(leds, NUM_LEDS, 64);
 		delay--;
+		return true;
+	}
+
+	if (counter < 5) {
+		counter++;
 		return false;
 	}
 
+	counter = 0;
+
 	if (speed > 0) {
-		for (int j = idx; j < idx + speed && j < NUM_LEDS; j++) {
+		for (int j = idx; j < idx + speed && j < NUM_LEDS; j+=2) {
 			leds[j] += color;
 		}
 	} else {
-		for (int j = idx + speed; j < idx && j >= 0; j++) {
+		for (int j = idx + speed; j < idx && j >= 0; j+=2) {
 			leds[j] += color;
 		}
 	}
 
 	idx += speed;
 
-	if ((speed > 0 && idx >= NUM_LEDS) || (speed < 0 && idx <= 0)) {
-		/* bolt reached end of strip, effect done */
-		Serial.printf("Effect done!\n");
-		return true;
+//	if ((speed > 0 && idx >= NUM_LEDS) || (speed < 0 && idx <= 0)) {
+//		speed *= -1;
+//	}
+	/* send next bolt in same direction */
+	if (speed > 0 && idx >= NUM_LEDS - 1) {
+		idx = 0;
+		if (++coloridx >= COLOR_PALETTE_SIZE) {
+			coloridx = 0;
+		}
+		this->color = COLOR_PALETTE[coloridx];
+		delay = 200;
 	}
 
-	return false;
+	fadeToBlackBy(leds, NUM_LEDS, 64);
+	return true;
 }
 
 /*********************** Effect Static *************************/
@@ -88,4 +104,35 @@ void EffectStatic::prevColor() {
 	color = COLOR_PALETTE[coloridx];
 	is_new_color = true;
 	Serial.printf("Prev color: %d\n", coloridx);
+}
+
+/*********************** Effect Arc *************************/
+void EffectArc::configure(CRGB color1, CRGB color2) {
+	this->color1 = color1;
+	this->color2 = color2;
+}
+
+#define ARC_INITIAL_PAUSE 10
+#define ARC_NUMBER 50
+#define ARC_PAUSE 15
+bool EffectArc::calcStep() {
+	if (delay) {
+		delay--;
+		return false;
+	}
+
+
+	for (int i = ARC_INITIAL_PAUSE; i < ARC_NUMBER + ARC_INITIAL_PAUSE; i++) {
+		leds[i] = switchColor ? color2 : color1;
+	}
+	for (int i = ARC_INITIAL_PAUSE + ARC_NUMBER + ARC_PAUSE;
+		i < ARC_NUMBER * 2 + ARC_INITIAL_PAUSE + ARC_PAUSE;
+		i++
+	) {
+		leds[i] = switchColor ? color1 : color2;
+	}
+
+	switchColor = !switchColor;
+	delay = random(100, 1000);
+	return true;
 }

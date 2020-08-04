@@ -76,10 +76,10 @@ extern const char* OTA_PW;
 #define BUTTON_CHECK_RES 100
 
 /*! \brief Resolution of the state machine (i.e. the delay each round) in ms */
-#define STATE_MACHINE_RES 10
+#define STATE_MACHINE_RES 1
 
 /*! \brief Default global brightness to start with */
-#define DEF_GLOBAL_BRIGHTNESS 31
+#define DEF_GLOBAL_BRIGHTNESS 200
 
 
 extern const IPAddress OWN_IP_ADDRESS;

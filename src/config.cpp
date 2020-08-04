@@ -4,16 +4,16 @@
 /* secret configuration */
 /************************/
 
-const char* SSID = "myssid";
-const char* WIFI_PSK = "mypsk";
-const char* OTA_PW = "ota_pw";
+const char* SSID = "musicstation";
+const char* WIFI_PSK = "testtesttest";
+const char* OTA_PW = "secretpw0";
 
 
 /************************/
 /* static configuration */
 /************************/
 
-const IPAddress OWN_IP_ADDRESS(192, 168, 2, 11);
+const IPAddress OWN_IP_ADDRESS(192, 168, 5, 11);
 const IPAddress SUBNET(255, 255, 255, 0);
 
 const uint16_t OTA_PORT = 3232;

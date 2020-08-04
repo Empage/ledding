@@ -45,6 +45,9 @@ private:
 	int8_t speed;
 	uint16_t delay;
 	CRGB color;
+
+	int counter = 0;
+	int coloridx = 0;
 };
 
 
@@ -66,6 +69,26 @@ private:
 
 	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
 	bool is_new_color;
+};
+
+
+/*! \brief Effect having a static, constant color per arc in the partyraum */
+class EffectArc : public Effect {
+public:
+	void configure(CRGB color1, CRGB color2);
+
+	bool calcStep() override;
+//	void nextColor() override;
+//	void prevColor() override;
+
+private:
+	uint16_t delay;
+
+	CRGB color1;
+	CRGB color2;
+
+	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
+	bool switchColor = false;
 };
 
 #endif /* end of include guard: EFFECT_H */
