@@ -8,6 +8,9 @@
   apt:
     pkg:
       - python-pip
+      - python-alsaaudio
+      - python-numpy
+ 
 
 - name: Installing platformio
   pip:
