@@ -24,10 +24,10 @@ lan_adapter: eth0
 #  |
 lan_static:
   enabled: True
-  address: 10.2.0.10
-  netmask: 255.255.0.0
-  gateway: 10.2.255.254
-  nameservers: 10.2.255.254
+  address: 192.168.2.14
+  netmask: 255.255.255.0
+  gateway: 192.168.2.1
+  nameservers: 8.8.8.8
 
 
 # -|----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ own_ip: "{{ ip_base }}.1"
 ip_range:
   start: "{{ ip_base }}.20"
   end: "{{ ip_base }}.254"
-dns_servers: "10.2.255.254 8.8.8.8 4.4.4.4"
+dns_servers: "8.8.8.8 4.4.4.4"
 subnet: 255.255.255.0
 network: "{{ ip_base }}.0"
 broadcast: "{{ ip_base }}.255"
