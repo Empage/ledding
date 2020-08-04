@@ -73,32 +73,15 @@ def arduino_soundlight():
     try:
         ser = serial.Serial(
             port='/dev/ttyAMA0',
-            # port='/dev/ttyUSB0',
-            # baudrate = 115200, # That might be 2 fast
             baudrate = 115200,
         )
         while True:
             data  = stream.read(chunk, exception_on_overflow = False)
 
-            '''
-            # Old RMS code, will only show the volume
-
-            rms   = audioop.rms(data, 2)
-
-            level = min(rms / (2.0 ** 16) * scale, 1.0)
-            level = level**exponent
-            level = int(level * 255)
-
-            print level
-            ser.write(chr(level))
-            '''
-
             # Do FFT
             levels = calculate_levels(data, chunk, samplerate, num_leds)
-            # print levels
             if double:
                 new = list(reversed(levels)) + levels
-
 
             levels = new
             print levels
@@ -112,8 +95,6 @@ def arduino_soundlight():
                     level = 254
                 elif level <= 60:
                     level = 0
-                # print level
-                # print("{}: {}".format(index, level))
                 ser.write(chr(level))
             ser.write(chr(255))
             s = ser.read()
