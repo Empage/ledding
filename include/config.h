@@ -8,7 +8,7 @@
 /* "static" configuration */
 
 /*! \brief Total number of LEDs */
-#define NUM_LEDS 150
+#define NUM_LEDS 159
 
 
 #define DATA_PIN 2
