@@ -8,10 +8,11 @@
 /* "static" configuration */
 
 /*! \brief Total number of LEDs */
-#define NUM_LEDS 150
+#define NUM_LEDS 148
 
 
-#define DATA_PIN 2
+// #define DATA_PIN 2
+#define DATA_PIN 23
 
 #define MIC_PIN 13
 #define DC_OFFSET 0
