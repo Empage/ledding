@@ -83,7 +83,6 @@ def arduino_soundlight():
             if double:
                 new = list(reversed(levels)) + levels
 
-
             levels = new
             # Make it look better and send to serial
             for index, level in enumerate(levels):
