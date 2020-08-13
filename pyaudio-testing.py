@@ -128,6 +128,9 @@ def calculate_levels(data, chunk, samplerate, num_leds):
     ffty=ffty1+ffty2
     ffty=numpy.log(ffty)-2
 
+    # we filter out the deep and high frequencies, because they are
+    # a) not hearable
+    # b) it looks so much better this way
     fourier = list(ffty)[10:]
     music_spectrum = len(fourier/4)
     fill_up = num_leds - len(fourier)/4
