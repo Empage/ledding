@@ -19,6 +19,7 @@ extern Ota ota;
 extern EffectStatic staticEffect;
 extern EffectBolt boltEffect;
 extern EffectArc arcEffect;
+extern EffectSound soundEffect;
 
 void increaseBrightness();
 void decreaseBrightness();

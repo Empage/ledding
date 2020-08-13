@@ -39,6 +39,10 @@ compilecommands:
 	platformio run -e ota --target compiledb && \
 	mv .pio/build/ota/compile_commands.json .
 
+# start serial console for ESP32 output
+monitor:
+	pio device monitor -b 115200
+
 # target for my vim shortcut
 tmp: build
 

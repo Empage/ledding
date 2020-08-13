@@ -103,11 +103,11 @@ void Buttons::activate(uint8_t button_pin) {
 			break;
 
 		case BUTTON_MODE_NEXT:
-			increaseBrightness();
+			animator.nextMode();
 			break;
 
 		case BUTTON_MODE_PREV:
-			decreaseBrightness();
+			animator.prevMode();
 			break;
 
 		default:
@@ -118,7 +118,7 @@ void Buttons::activate(uint8_t button_pin) {
 	/* do dev action */
 	if (button_pin == DEV_BUTTON_PIN) {
 		/* mirror the brightness increase touch button */
-		activate(BUTTON_COLOR_NEXT);
+		activate(BUTTON_MODE_NEXT);
 	}
 #endif
 }

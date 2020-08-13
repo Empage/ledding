@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <FastLED.h>
+#include <config.h>
 
 /* include global instances of leds, animator, buttons, ota and effects */
 #include "globals.h"
@@ -17,6 +18,9 @@ void setup() {
 	Serial.begin(115200);
 #endif
 
+	/* setup connection to RPi */
+    Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
+
 	/* setup the effects */
 	staticEffect.configure(CRGB::DeepPink);
 	animator.addEffect(Animator::ANIMATOR_CONSTANT, &staticEffect);
@@ -24,8 +28,10 @@ void setup() {
 	animator.addEffect(Animator::ANIMATOR_BOLT, &boltEffect);
 	arcEffect.configure(CRGB::Blue, CRGB::Green);
 	animator.addEffect(Animator::ANIMATOR_ARC, &arcEffect);
+	soundEffect.configure(CRGB::Red);
+	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
 
-	animator.mode = Animator::ANIMATOR_ARC;
+	animator.mode = Animator::ANIMATOR_SOUND;
 
 	/* turn on builtin LED */
 	digitalWrite(BUILTIN_LED, HIGH);
@@ -43,4 +49,22 @@ void loop() {
 	EVERY_N_MILLISECONDS(BUTTON_CHECK_RES) {
 		buttons.handleButtons();
 	}
+}
+
+void blur() {
+
+	uint8_t blurAmount = dim8_raw( beatsin8(3,64, 192) );
+	blur1d( leds, NUM_LEDS, blurAmount);
+
+	uint8_t  i = beatsin8(  9, 0, NUM_LEDS);
+	uint8_t  j = beatsin8( 7, 0, NUM_LEDS);
+	uint8_t  k = beatsin8(  5, 0, NUM_LEDS);
+
+	// The color of each point shifts over time, each at a different speed.
+	uint16_t ms = millis();
+	leds[(i+j)/2] = CHSV( ms / 29, 200, 255);
+	leds[(j+k)/2] = CHSV( ms / 41, 200, 255);
+	leds[(k+i)/2] = CHSV( ms / 73, 200, 255);
+	leds[(k+i+j)/3] = CHSV( ms / 53, 200, 255);
+	FastLED.show();
 }

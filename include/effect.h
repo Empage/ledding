@@ -91,4 +91,20 @@ private:
 	bool switchColor = false;
 };
 
+/*! \brief Effect for sound visualization */
+class EffectSound : public Effect {
+public:
+	void configure(CRGB color);
+
+	bool calcStep() override;
+
+private:
+	int currentLED = 0;
+
+	CRGB color;
+
+	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
+	bool is_new_color;
+};
+
 #endif /* end of include guard: EFFECT_H */

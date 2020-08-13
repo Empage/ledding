@@ -30,11 +30,16 @@ extern const char* OTA_PW;
 /* static configuration */
 /************************/
 /*! \brief Total number of LEDs */
-#define NUM_LEDS 150
+#define NUM_LEDS 148
 
 /* for pin configuration, please check doc/pinout_maite.ods */
 /*! \brief GPIO on which the data signal of the WS2812B is connected */
 #define LED_DATA_PIN 23
+
+/*! \brief Serial input from RPi (LED data) */
+#define SERIAL_TO_RPI_RXD2 17
+/*! \brief Serial output to RPi (ACKs for LED data input) */
+#define SERIAL_TO_RPI_TXD2 16
 
 
 /*! \brief GPIO for the built-in LED */

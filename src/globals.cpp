@@ -7,6 +7,7 @@ Ota ota;
 EffectStatic staticEffect;
 EffectBolt boltEffect;
 EffectArc arcEffect;
+EffectSound soundEffect;
 
 void increaseBrightness() {
 	uint8_t brightness = FastLED.getBrightness();

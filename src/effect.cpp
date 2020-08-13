@@ -136,3 +136,26 @@ bool EffectArc::calcStep() {
 	delay = random(100, 1000);
 	return true;
 }
+
+/*********************** Effect Sound *************************/
+void EffectSound::configure(CRGB color) {
+	this->color = color;
+
+	is_new_color = true;
+}
+
+bool EffectSound::calcStep() {
+	for (int i = 0; i < NUM_LEDS; i++) {
+		if (Serial2.available()) {
+			uint8_t value = Serial2.read();
+			if ( value == 255) {
+				currentLED = 0;
+				Serial2.write(84);
+				return true;
+			}
+			leds[currentLED].setRGB(value, 0, 0);
+			currentLED++;
+		}
+	}
+	return false;
+}
