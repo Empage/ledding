@@ -128,8 +128,8 @@ def calculate_levels(data, chunk, samplerate, num_leds):
     ffty=ffty1+ffty2
     ffty=numpy.log(ffty)-2
 
-    fourier = list(ffty)[4:-4]
-    fourier = fourier[6:len(fourier)/4+48] # +48 because we fill up to our number of leds
+    fourier = list(ffty)[10:]
+    fourier = fourier[:len(fourier)/4+48] # +48 because we fill up to our number of leds
 
     size = len(fourier)
 
