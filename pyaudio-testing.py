@@ -131,7 +131,7 @@ def calculate_levels(data, chunk, samplerate, num_leds):
     fourier = list(ffty)[10:]
     music_spectrum = len(fourier/4)
     fill_up = num_leds - len(fourier)/4
-    fourier = fourier[:music_spectrum+fill_up] # +48 because we fill up to our number of leds
+    fourier = fourier[:music_spectrum+fill_up]
 
     size = len(fourier)
 
