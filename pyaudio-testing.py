@@ -80,7 +80,7 @@ def arduino_soundlight():
             for index, level in enumerate(levels):
                 level = int(level**3.0)
 
-                 if level >= 255:
+                if level >= 255:
                     level = 254
                 elif level <= 60:
                     level = 0
