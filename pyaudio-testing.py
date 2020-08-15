@@ -76,8 +76,14 @@ def arduino_soundlight():
                 new = list(reversed(levels)) + levels
 
             levels = new
+
+            peak = abs(int(sum(levels)-(num_leds*2)))**3.0
+            peak = int(peak / 100000 / 2.5)
+            if peak > ( num_leds * 2 ) or peak > 254:
+                peak = num_leds * 2
+
             # Make it look better and send to serial
-            for index, level in enumerate(levels):
+            for index, level in enumerate(levels[2:]):
                 level = int(level**3.0)
 
                 if level >= 255:
@@ -86,6 +92,7 @@ def arduino_soundlight():
                     level = 0
                 ser.write(chr(level))
             ser.write(chr(255))
+            ser.write(chr(int(peak)))
             s = ser.read()
 
     except KeyboardInterrupt:
@@ -118,7 +125,7 @@ def calculate_levels(data, chunk, samplerate, num_leds):
     # we filter out the deep and high frequencies, because they are
     # a) not hearable
     # b) it looks so much better this way
-    fourier = list(ffty)[10:]
+    fourier = list(ffty)
     music_spectrum = len(fourier)/4
     fill_up = num_leds - len(fourier)/4
     fourier = fourier[:music_spectrum+fill_up]
