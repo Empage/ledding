@@ -28,5 +28,4 @@
     path: /home/pi/ledding
     owner: pi
     group: pi
-    mode: "0755"
     recurse: yes
