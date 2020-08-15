@@ -1,3 +1,6 @@
 .pio
 .clang_complete
 .gcc-flags.json
+.ccls-cache
+.clangd
+compile_commands.json

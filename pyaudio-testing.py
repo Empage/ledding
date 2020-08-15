@@ -38,7 +38,7 @@ def list_devices():
 
 def arduino_soundlight():
     print "Starting Arduino Soundlight"
-    chunk      = 2**12 # Change if too fast/slow, never less than 2**11
+    chunk      = 2**11 # Change if too fast/slow, never less than 2**11
     scale      = 26    # Change if too dim/bright
     exponent   = 1     # Change if too little/too much difference between loud and quiet sounds
     samplerate = 44100
@@ -47,14 +47,14 @@ def arduino_soundlight():
     # Enable stereo mixing in your sound card
     # to make you sound output an input
     # Use list_devices() to list all your input devices
-    device   = 2 # Original
+    device   = 0 # Original
     MAX = 0
-    num_leds = 140
+    num_leds = 148 #Thats how my LEDs we have
     double = True
     if double:
-        num_leds = num_leds / 2 + 4
+        num_leds = num_leds / 2# + 4
     else:
-        num_leds = num_leds + 4
+        num_leds = num_leds# + 4
 
     p = pyaudio.PyAudio()
     stream = p.open(format = pyaudio.paInt16,
@@ -80,13 +80,14 @@ def arduino_soundlight():
                 new = list(reversed(levels)) + levels
 
             levels = new
-            print levels
             # Make it look better and send to serial
             for index, level in enumerate(levels):
-                # level = int(level**1.5)
-                level = max(min(level / scale, 1.0), 0.0)
-                level = level**exponent
-                level = int(level * 255)
+                level = int(level**1.9)
+
+                #FIXME: Do we still need this?
+                #level = max(min(level / scale, 1.0), 0.0)
+                #level = level**exponent
+                #level = int(level * 255)
                 if level >= 255:
                     level = 254
                 elif level <= 60:
@@ -123,13 +124,18 @@ def calculate_levels(data, chunk, samplerate, num_leds):
     ffty=ffty1+ffty2
     ffty=numpy.log(ffty)-2
 
-    fourier = list(ffty)[4:-4]
-    fourier = fourier[:len(fourier)/2]
+    # we filter out the deep and high frequencies, because they are
+    # a) not hearable
+    # b) it looks so much better this way
+    fourier = list(ffty)[10:]
+    music_spectrum = len(fourier/4)
+    fill_up = num_leds - len(fourier)/4
+    fourier = fourier[:music_spectrum+fill_up]
 
     size = len(fourier)
 
     # Add up for num_leds lights
-    levels = [int(abs(sum(fourier[i:(i+size/num_leds)]))) for i in xrange(0, size, size/num_leds)][2:-2] # backup
+    levels = [int(abs(sum(fourier[i:(i+size/num_leds)]))) for i in xrange(0, size, size/num_leds)]
     # levels = [int(sum(fourier[i:(i+size/num_leds)])) for i in xrange(0, size, size/num_leds)][:num_leds]
 
     return levels
