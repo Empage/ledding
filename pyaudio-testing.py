@@ -70,6 +70,7 @@ def arduino_soundlight():
         ser = serial.Serial(
             port='/dev/ttyAMA0',
             baudrate = 115200,
+            timeout = 5,
         )
         while True:
             data  = stream.read(chunk, exception_on_overflow = False)
