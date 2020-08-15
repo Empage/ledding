@@ -83,7 +83,7 @@ def arduino_soundlight():
             levels = new
             # Make it look better and send to serial
             for index, level in enumerate(levels):
-                level = int(level**1.9)
+                level = int(level**3.0
 
                 #FIXME: Do we still need this?
                 #level = max(min(level / scale, 1.0), 0.0)
