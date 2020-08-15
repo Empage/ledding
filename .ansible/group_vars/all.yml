@@ -27,7 +27,7 @@ lan_static:
   address: 192.168.2.14
   netmask: 255.255.255.0
   gateway: 192.168.2.1
-  nameservers: 8.8.8.8
+  nameservers: "192.168.2.1 8.8.8.8"
 
 
 # -|----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ own_ip: "{{ ip_base }}.1"
 ip_range:
   start: "{{ ip_base }}.20"
   end: "{{ ip_base }}.254"
-dns_servers: "8.8.8.8 4.4.4.4"
+dns_servers: "192.168.2.1 8.8.8.8 4.4.4.4"
 subnet: 255.255.255.0
 network: "{{ ip_base }}.0"
 broadcast: "{{ ip_base }}.255"
