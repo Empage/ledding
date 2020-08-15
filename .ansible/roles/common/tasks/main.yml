@@ -29,3 +29,14 @@
     owner: pi
     group: pi
     recurse: yes
+
+- name: Install Systemd Unit for AudioFFT
+  template:
+    src: templates/pyaudio.service
+    dest: /etc/systemd/system/
+
+- name: Restart Systemd Unit
+  systemd:
+    state: restarted
+    name: pyaudio.service
+    daemon_reload: yes

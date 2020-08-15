@@ -1,0 +1,11 @@
+[Unit]
+Description=FFT for ESP32
+After=network.service
+
+[Service]
+Restart=on-failure
+RestartSec=10s
+ExecStart=/home/pi/ledding/pyaudio-testing.py
+
+[Install]
+WantedBy=multi-user.target
