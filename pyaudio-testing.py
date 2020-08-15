@@ -84,7 +84,7 @@ def arduino_soundlight():
 
             # Make it look better and send to serial
             for index, level in enumerate(levels[2:]):
-                level = int(level**3.0)
+                level = int(level**4.0)
 
                 if level >= 255:
                     level = 254
@@ -92,7 +92,8 @@ def arduino_soundlight():
                     level = 0
                 ser.write(chr(level))
             ser.write(chr(255))
-            ser.write(chr(int(peak)))
+            #TODO: For peak levels
+            #ser.write(chr(int(peak)))
             s = ser.read()
 
     except KeyboardInterrupt:
