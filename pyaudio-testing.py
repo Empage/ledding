@@ -129,7 +129,7 @@ def calculate_levels(data, chunk, samplerate, num_leds):
     # a) not hearable
     # b) it looks so much better this way
     fourier = list(ffty)[10:]
-    music_spectrum = len(fourier/4)
+    music_spectrum = len(fourier)/4
     fill_up = num_leds - len(fourier)/4
     fourier = fourier[:music_spectrum+fill_up]
 
