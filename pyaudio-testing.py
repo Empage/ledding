@@ -21,10 +21,6 @@ http://macdevcenter.com/pub/a/python/2001/01/31/numerically.html?page=2
 
 '''
 
-
-# /usr/share/sounds/alsa/Front_Center.wav
-
-
 def list_devices():
     # List all audio input devices
     p = pyaudio.PyAudio()
@@ -60,7 +56,6 @@ def arduino_soundlight():
     stream = p.open(format = pyaudio.paInt16,
                     channels = 2,
                     rate = 44100,
-                    # rate = 192000,
                     input = True,
                     frames_per_buffer = chunk,
                     input_device_index = device)
@@ -83,13 +78,9 @@ def arduino_soundlight():
             levels = new
             # Make it look better and send to serial
             for index, level in enumerate(levels):
-                level = int(level**3.0
+                level = int(level**3.0)
 
-                #FIXME: Do we still need this?
-                #level = max(min(level / scale, 1.0), 0.0)
-                #level = level**exponent
-                #level = int(level * 255)
-                if level >= 255:
+                 if level >= 255:
                     level = 254
                 elif level <= 60:
                     level = 0
@@ -107,7 +98,6 @@ def arduino_soundlight():
 
 def calculate_levels(data, chunk, samplerate, num_leds):
     # Use FFT to calculate volume for each frequency
-    # numpy.set_printoptions(threshold=sys.maxint) # prints the whole list
     global MAX
 
     # Convert raw sound data to Numpy array
@@ -137,7 +127,6 @@ def calculate_levels(data, chunk, samplerate, num_leds):
 
     # Add up for num_leds lights
     levels = [int(abs(sum(fourier[i:(i+size/num_leds)]))) for i in xrange(0, size, size/num_leds)]
-    # levels = [int(sum(fourier[i:(i+size/num_leds)])) for i in xrange(0, size, size/num_leds)][:num_leds]
 
     return levels
 
