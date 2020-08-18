@@ -24,11 +24,11 @@ const uint16_t OTA_PORT = 3232;
 
 const CRGB::HTMLColorCode COLOR_PALETTE[] = {
 	CRGB::DeepPink,
-	CRGB::White,
 	CRGB::Blue,
 	CRGB::Red,
 	CRGB::Green,
 	CRGB::Yellow,
+	CRGB::White,
 };
 
 const int COLOR_PALETTE_SIZE = sizeof(COLOR_PALETTE) / sizeof(CRGB::HTMLColorCode);

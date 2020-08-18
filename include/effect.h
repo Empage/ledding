@@ -51,16 +51,20 @@ public:
 	bool calcNextFrame() override;
 	void nextColor() override;
 	void prevColor() override;
+	void incIntensity() override;
+	void decIntensity() override;
 
 private:
-	/*! \brief current color */
-	CRGB color;
+	static const int SUBMODE_COUNT = 3;
+
+	/*! \brief current colors */
+	CRGB color[SUBMODE_COUNT];
 
 	/*! \brief Keep track of the current color in the COLOR_PALETTE for the next and prev buttons */
 	int coloridx = 0;
 
-	/*! \brief Update LEDs in next `calcNextFrame()` when a new color was selected */
-	bool is_new_color;
+	/*! \brief Keep track of the current submode */
+	int submodeidx = 0;
 };
 
 

@@ -69,21 +69,47 @@ bool EffectBolt::calcNextFrame() {
 
 /*********************** Effect Static *************************/
 void EffectStatic::configure(CRGB color) {
-	this->color = color;
-
-	is_new_color = true;
+	this->color[0] = color;
+	for (int i = 1; i < SUBMODE_COUNT; i++) {
+		this->color[i] = COLOR_PALETTE[(coloridx + i) % COLOR_PALETTE_SIZE];
+	}
+	draw = true;
 }
 
 bool EffectStatic::calcNextFrame() {
-	if (!is_new_color) {
+	if (!draw) {
 		return false;
 	}
 
-	for (int i = 0; i < NUM_LEDS; i++) {
-		leds[i] = color;
+	switch (submodeidx) {
+		/* single color on all LEDs */
+		case 0:
+		default:
+			for (int i = 0; i < NUM_LEDS; i++) {
+				leds[i] = color[0];
+			}
+			break;
+
+		/* use two colors alternatingly */
+		case 1: {
+			for (int i = 0; i < NUM_LEDS - 1 ; i += 2) {
+				leds[i] = color[0];
+				leds[i + 1] = color[1];
+			}
+			break;
+
+		}
+		/* use three colors alternatingly */
+		case 2:
+			for (int i = 0; i < NUM_LEDS - 2 ; i += 3) {
+				leds[i] = color[0];
+				leds[i + 1] = color[1];
+				leds[i + 2] = color[2];
+			}
+			break;
 	}
 
-	is_new_color = false;
+	draw = false;
 	return true;
 }
 
@@ -91,18 +117,34 @@ void EffectStatic::nextColor() {
 	if (++coloridx >= COLOR_PALETTE_SIZE) {
 		coloridx = 0;
 	}
-	color = COLOR_PALETTE[coloridx];
-	is_new_color = true;
-	Serial.printf("Next color: %d\n", coloridx);
+	for (int i = 0; i < SUBMODE_COUNT; i++) {
+		color[i] = COLOR_PALETTE[(coloridx + i) % COLOR_PALETTE_SIZE];
+	}
+	draw = true;
 }
 
 void EffectStatic::prevColor() {
 	if (--coloridx <= 0) {
 		coloridx = COLOR_PALETTE_SIZE - 1;
 	}
-	color = COLOR_PALETTE[coloridx];
-	is_new_color = true;
-	Serial.printf("Prev color: %d\n", coloridx);
+	for (int i = 0; i < SUBMODE_COUNT; i++) {
+		color[i] = COLOR_PALETTE[modulo(coloridx - i, COLOR_PALETTE_SIZE)];
+	}
+	draw = true;
+}
+
+void EffectStatic::incIntensity() {
+	if (++submodeidx >= SUBMODE_COUNT) {
+		submodeidx = 0;
+	}
+	draw = true;
+}
+
+void EffectStatic::decIntensity() {
+	if (--submodeidx <= 0) {
+		submodeidx = SUBMODE_COUNT - 1;
+	}
+	draw = true;
 }
 
 /*********************** Effect Arc *************************/
