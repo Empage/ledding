@@ -80,8 +80,8 @@ extern const char* OTA_PW;
 /*! \brief How often are the button states polled in ms */
 #define BUTTON_CHECK_RES 100
 
-/*! \brief Resolution of the state machine (i.e. the delay each round) in ms */
-#define STATE_MACHINE_RES 10
+/*! \brief Resolution of the stripe redrawing routine (i.e. the delay each round) in ms */
+#define REDRAW_RESOLUTION 10
 
 /*! \brief Default global brightness to start with */
 #define DEF_GLOBAL_BRIGHTNESS 200

@@ -6,8 +6,8 @@
 Animator::Animator() {
 }
 
-void Animator::runStateMachine() {
-	if (effects[mode]->calcStep()) {
+void Animator::redraw() {
+	if (effects[mode]->calcNextFrame()) {
 		FastLED.show();
 	}
 }
@@ -24,6 +24,8 @@ void Animator::nextMode() {
 		}
 
 		mode = static_cast<AnimatorMode>((mode + i) % ANIMATOR_MODE_SIZE);
+		/* tell the new effect to redraw */
+		effects[mode]->draw = true;
 		return;
 	}
 
@@ -50,6 +52,8 @@ void Animator::prevMode() {
 		}
 
 		mode = static_cast<AnimatorMode>(new_index);
+		/* tell the new effect to redraw */
+		effects[mode]->draw = true;
 		return;
 	}
 

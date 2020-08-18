@@ -22,8 +22,8 @@ public:
 
 	explicit Animator();
 
-	/*! \brief Calculate next step on the currently active mode */
-	void runStateMachine();
+	/*! \brief Calculate next frame on the currently active mode */
+	void redraw();
 
 	/*! \brief Add the effect for the given mode
 	 *

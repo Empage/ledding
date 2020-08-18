@@ -7,6 +7,23 @@
 /* include global instances of leds, animator, buttons, ota and effects */
 #include "globals.h"
 
+void setupMaite() {
+	animator.mode = Animator::ANIMATOR_CONSTANT;
+}
+
+void setupPartyraum() {
+	/* setup connection to RPi */
+    Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
+
+	/* setup partyraum specifc effects */
+	arcEffect.configure(CRGB::Blue, CRGB::Green);
+	animator.addEffect(Animator::ANIMATOR_ARC, &arcEffect);
+	soundEffect.configure(CRGB::Red);
+	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
+
+	animator.mode = Animator::ANIMATOR_SOUND;
+}
+
 void setup() {
 	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
 	FastLED.setBrightness(DEF_GLOBAL_BRIGHTNESS);
@@ -20,18 +37,11 @@ void setup() {
 	Serial.begin(115200);
 #endif
 
-	/* setup connection to RPi */
-    Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
-
-	/* setup the effects */
+	/* setup common effects */
 	staticEffect.configure(CRGB::DeepPink);
 	animator.addEffect(Animator::ANIMATOR_CONSTANT, &staticEffect);
 	boltEffect.configure(0, 2, CRGB::Red, 10);
 	animator.addEffect(Animator::ANIMATOR_BOLT, &boltEffect);
-	arcEffect.configure(CRGB::Blue, CRGB::Green);
-	animator.addEffect(Animator::ANIMATOR_ARC, &arcEffect);
-	soundEffect.configure(CRGB::Red);
-	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
 	strobeEffect.configure(CRGB::White);//, 3, 50, 1000);
 	animator.addEffect(Animator::ANIMATOR_STROBE, &strobeEffect);
 	sparkleEffect.configure(CRGB::White);
@@ -39,8 +49,17 @@ void setup() {
 	
     animator.mode = Animator::ANIMATOR_STROBE;
 
+	/* setup specifics for individual installation */
+#ifdef MAITE
+	setupMaite();
+#else
+	setupPartyraum();
+#endif
+
+#ifdef DEV_MODE
 	/* turn on builtin LED */
 	digitalWrite(BUILTIN_LED, HIGH);
+#endif
 
 	ota.init();
 }
@@ -49,8 +68,8 @@ void setup() {
 void loop() {
 	ota.handleOta();
 
-	EVERY_N_MILLISECONDS(STATE_MACHINE_RES) {
-		animator.runStateMachine();
+	EVERY_N_MILLISECONDS(REDRAW_RESOLUTION) {
+		animator.redraw();
 	}
 
 	EVERY_N_MILLISECONDS(BUTTON_CHECK_RES) {

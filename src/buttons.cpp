@@ -76,15 +76,15 @@ void Buttons::activate(uint8_t button_pin) {
 #endif
 
 	switch (button_pin) {
-		case BUTTON_BRT_INC: {
+		case BUTTON_BRT_INC:
 			increaseBrightness();
 			break;
-		}
 
-		case BUTTON_BRT_DEC: {
+
+		case BUTTON_BRT_DEC:
 			decreaseBrightness();
 			break;
-		}
+
 
 		case BUTTON_INTENSITY_INC:
 			animator.incIntensity();
@@ -110,15 +110,14 @@ void Buttons::activate(uint8_t button_pin) {
 			animator.prevMode();
 			break;
 
+#ifdef DEV_MODE
+		/* use the dev button when there is not enough tough buttons available on dev board */
+		case DEV_BUTTON_PIN:
+			animator.nextMode();
+			break;
+#endif
+
 		default:
 			break;
 	}
-
-#ifdef DEV_MODE
-	/* do dev action */
-	if (button_pin == DEV_BUTTON_PIN) {
-		/* mirror the brightness increase touch button */
-		activate(BUTTON_MODE_NEXT);
-	}
-#endif
 }

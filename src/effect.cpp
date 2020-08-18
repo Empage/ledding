@@ -21,10 +21,9 @@ void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t
 	this->delay = delay;
 
 	Serial.printf("Configure led: %d, speed: %d, delay: %d\n", idx, this->speed, this->delay);
-	calcStep();
 }
 
-bool EffectBolt::calcStep() {
+bool EffectBolt::calcNextFrame() {
 
 	if (delay) {
 		fadeToBlackBy(leds, NUM_LEDS, 64);
@@ -75,7 +74,7 @@ void EffectStatic::configure(CRGB color) {
 	is_new_color = true;
 }
 
-bool EffectStatic::calcStep() {
+bool EffectStatic::calcNextFrame() {
 	if (!is_new_color) {
 		return false;
 	}
@@ -115,7 +114,7 @@ void EffectArc::configure(CRGB color1, CRGB color2) {
 #define ARC_INITIAL_PAUSE 10
 #define ARC_NUMBER 50
 #define ARC_PAUSE 15
-bool EffectArc::calcStep() {
+bool EffectArc::calcNextFrame() {
 	if (delay) {
 		delay--;
 		return false;
@@ -144,26 +143,26 @@ void EffectSound::configure(CRGB color) {
 	is_new_color = true;
 }
 
-bool EffectSound::calcStep() {
-    int peak = 0;
-    uint16_t peak_counter = 0;
+bool EffectSound::calcNextFrame() {
+//	int peak = 0;
+//	uint16_t peak_counter = 0;
 	for (int i = 0; i < NUM_LEDS; i++) {
 		if (Serial2.available()) {
 			uint8_t value = Serial2.read();
 			if ( value == 255) {
 				currentLED = 0;
-                /*  Keep this for Peak Output
-                peak = Serial2.read();
-                fadeToBlackBy(leds, NUM_LEDS, 192);
-                uint8_t counter_peak = 0;
-                while ( peak > 0 ) {
-                    leds[counter_peak].setRGB(255, 0, 0);
-                    counter_peak++;
-                    peak--;
-                    leds[counter_peak].setRGB(255, 0, 0);
-                }
-                */
-                
+				/*  Keep this for Peak Output
+				peak = Serial2.read();
+				fadeToBlackBy(leds, NUM_LEDS, 192);
+				uint8_t counter_peak = 0;
+				while ( peak > 0 ) {
+				leds[counter_peak].setRGB(255, 0, 0);
+				counter_peak++;
+				peak--;
+				leds[counter_peak].setRGB(255, 0, 0);
+				}
+				*/
+
 				Serial2.write(84);
 				return true;
 			}
