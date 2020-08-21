@@ -11,6 +11,8 @@ void setup() {
 	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
 	FastLED.setBrightness(DEF_GLOBAL_BRIGHTNESS);
 	FastLED.setDither();
+    fill_solid(leds, NUM_LEDS, CRGB::Black);
+    FastLED.show();
 
 	pinMode(BUILTIN_LED, OUTPUT);
 
@@ -30,14 +32,19 @@ void setup() {
 	animator.addEffect(Animator::ANIMATOR_ARC, &arcEffect);
 	soundEffect.configure(CRGB::Red);
 	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
-
-	animator.mode = Animator::ANIMATOR_SOUND;
+	strobeEffect.configure(CRGB::White);//, 3, 50, 1000);
+	animator.addEffect(Animator::ANIMATOR_STROBE, &strobeEffect);
+	sparkleEffect.configure(CRGB::White);
+	animator.addEffect(Animator::ANIMATOR_SPARKLE, &sparkleEffect);
+	
+    animator.mode = Animator::ANIMATOR_STROBE;
 
 	/* turn on builtin LED */
 	digitalWrite(BUILTIN_LED, HIGH);
 
 	ota.init();
 }
+
 
 void loop() {
 	ota.handleOta();

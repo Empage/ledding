@@ -15,8 +15,10 @@ public:
 		ANIMATOR_BOLT,
 		ANIMATOR_ARC,
 		ANIMATOR_SOUND,
+        ANIMATOR_STROBE,
+        ANIMATOR_SPARKLE,
 	};
-	static const int ANIMATOR_MODE_SIZE = 4;
+	static const int ANIMATOR_MODE_SIZE = 6;
 
 	explicit Animator();
 

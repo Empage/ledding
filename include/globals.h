@@ -20,6 +20,8 @@ extern EffectStatic staticEffect;
 extern EffectBolt boltEffect;
 extern EffectArc arcEffect;
 extern EffectSound soundEffect;
+extern EffectStrobe strobeEffect;
+extern EffectSparkle sparkleEffect;
 
 void increaseBrightness();
 void decreaseBrightness();

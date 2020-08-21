@@ -145,17 +145,81 @@ void EffectSound::configure(CRGB color) {
 }
 
 bool EffectSound::calcStep() {
+    int peak = 0;
+    uint16_t peak_counter = 0;
 	for (int i = 0; i < NUM_LEDS; i++) {
 		if (Serial2.available()) {
 			uint8_t value = Serial2.read();
 			if ( value == 255) {
 				currentLED = 0;
+                /*  Keep this for Peak Output
+                peak = Serial2.read();
+                fadeToBlackBy(leds, NUM_LEDS, 192);
+                uint8_t counter_peak = 0;
+                while ( peak > 0 ) {
+                    leds[counter_peak].setRGB(255, 0, 0);
+                    counter_peak++;
+                    peak--;
+                    leds[counter_peak].setRGB(255, 0, 0);
+                }
+                */
+                
 				Serial2.write(84);
 				return true;
 			}
-			leds[currentLED].setRGB(value, 0, 0);
+            leds[currentLED].setRGB(value, 0, 0);
 			currentLED++;
 		}
 	}
 	return false;
+}
+
+/*********************** Effect Strobe *************************/
+void EffectStrobe::configure(CRGB color) { //, uint8_t count, uint8_t flashDelay, uint16_t endPause) {
+	this->color = color;
+	// this->count = count;
+	// this->flashDelay = flashDelay;
+	// this->endPause = endPause;
+}
+
+bool EffectStrobe::calcStep() {
+    count++;
+    Serial.println(count);
+    if ( count >= 200 ) {
+        count = 0;
+		this->color = COLOR_PALETTE[random(COLOR_PALETTE_SIZE)];
+        return false;
+    }
+    if ( count >= 100 ) {
+		fill_solid(leds, NUM_LEDS, CRGB::Black);
+        return true;
+    }
+    if ( count % 6 >= 3) {
+		fill_solid(leds, NUM_LEDS, color);
+        return true;
+    }
+    if ( count % 6 <= 3 ) {
+		fill_solid(leds, NUM_LEDS, CRGB::Black);
+        return true;
+    }
+    return false;
+}
+
+/*********************** Effect Sparkle *************************/
+void EffectSparkle::configure(CRGB color) {
+    this->color = color;
+}
+
+bool EffectSparkle::calcStep() {
+    if ( count == 0 ) {
+        pixel = random(NUM_LEDS);
+        leds[pixel] = color;
+        count++;
+        return true;
+    }
+    if ( count >= 1 ) {
+        leds[pixel] = CRGB::Black;
+        count = 0;
+        return true;
+    }
 }

@@ -107,4 +107,32 @@ private:
 	bool is_new_color;
 };
 
+/*! \brief Effect for strobes */
+class EffectStrobe : public Effect {
+public:
+	void configure(CRGB color);//, uint8_t count, uint8_t flashDelay, uint16_t endPause);
+
+	bool calcStep() override;
+
+private:
+	CRGB color;
+    int count = 0;
+    int coloridx = 0;
+    // int flashDelay = 5;
+    // int endPause = 100;
+
+	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
+};
+
+class EffectSparkle : public Effect {
+    public:
+        void configure(CRGB color);
+        bool calcStep() override;
+
+    private:
+        CRGB color;
+        int count = 0;
+        int pixel;
+};
+
 #endif /* end of include guard: EFFECT_H */
