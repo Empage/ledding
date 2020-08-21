@@ -3,8 +3,8 @@ Description=FFT for ESP32
 After=network.service
 
 [Service]
-Restart=on-failure
-RestartSec=10s
+Restart=always
+RestartSec=30s
 ExecStart=/home/pi/ledding/pyaudio-testing.py
 
 [Install]
