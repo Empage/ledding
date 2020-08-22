@@ -30,7 +30,12 @@ extern const char* OTA_PW;
 /* static configuration */
 /************************/
 /*! \brief Total number of LEDs */
+#ifdef MAITE
+#define NUM_LEDS 150
+#else
 #define NUM_LEDS 148
+#endif
+
 
 /* for pin configuration, please check doc/pinout_maite.ods */
 /*! \brief GPIO on which the data signal of the WS2812B is connected */
@@ -75,7 +80,7 @@ extern const char* OTA_PW;
  * If the actual value which was read was below this twice in a row, the button is considered pressed.
  * Twice because there a some occasional bogus reads below the threshold although it was not pressed.
  */
-#define TOUCH_BUTTON_THRESHOLD 20
+#define TOUCH_BUTTON_THRESHOLD 30
 
 /*! \brief How often are the button states polled in ms */
 #define BUTTON_CHECK_RES 100

@@ -108,7 +108,7 @@ class EffectStrobe : public Effect {
 public:
 	void configure(CRGB color);//, uint8_t count, uint8_t flashDelay, uint16_t endPause);
 
-	bool calcStep() override;
+	bool calcNextFrame() override;
 
 private:
 	CRGB color;
@@ -117,13 +117,13 @@ private:
     // int flashDelay = 5;
     // int endPause = 100;
 
-	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
+	/*! \brief Update LEDs in next `calcNextFrame()` when a new color was selected */
 };
 
 class EffectSparkle : public Effect {
     public:
         void configure(CRGB color);
-        bool calcStep() override;
+        bool calcNextFrame() override;
 
     private:
         CRGB color;

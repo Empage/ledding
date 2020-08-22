@@ -223,7 +223,7 @@ void EffectStrobe::configure(CRGB color) { //, uint8_t count, uint8_t flashDelay
 	// this->endPause = endPause;
 }
 
-bool EffectStrobe::calcStep() {
+bool EffectStrobe::calcNextFrame() {
     count++;
     Serial.println(count);
     if ( count >= 200 ) {
@@ -251,7 +251,7 @@ void EffectSparkle::configure(CRGB color) {
     this->color = color;
 }
 
-bool EffectSparkle::calcStep() {
+bool EffectSparkle::calcNextFrame() {
     if ( count == 0 ) {
         pixel = random(NUM_LEDS);
         leds[pixel] = color;

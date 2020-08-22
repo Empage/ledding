@@ -14,7 +14,7 @@ const char* OTA_PW = "secretpw0";
 /************************/
 
 #ifdef MAITE
-const IPAddress OWN_IP_ADDRESS(192, 168, 2, 11);
+const IPAddress OWN_IP_ADDRESS(192, 168, 2, 12);
 #else /* partyraum */
 const IPAddress OWN_IP_ADDRESS(192, 168, 5, 11);
 #endif
