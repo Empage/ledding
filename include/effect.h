@@ -10,7 +10,7 @@ public:
 	 *
 	 * \return true if frame changed (so should be redrawn), false if nothing changed
 	 */
-	virtual bool calcStep();
+	virtual bool calcNextFrame();
 
 	/*! \brief Switch to the next color for this effect */
 	virtual void nextColor();
@@ -21,24 +21,16 @@ public:
 	virtual void incIntensity();
 	/*! \brief Decrease the intensity of this effect */
 	virtual void decIntensity();
+
+	/*! \brief Indicate whether to write this frame to the led array or not */
+	bool draw = true;
 };
 
 class EffectBolt : public Effect {
 public:
-
-	/*! \brief Create a bolt
-	 *
-	 * \param speed Speed and direction of the bolt (num of leds per round)
-	 */
-//	EffectBolt();
-
 	void configure(uint16_t startled, int8_t speed, CRGB color, uint16_t delay);
 
-	/*! \brief Calculate next step of the effect
-	 *
-	 * \return True if effect is done, false if function needs to be called again
-	 */
-	bool calcStep();
+	bool calcNextFrame() override;
 
 private:
 	int idx;
@@ -56,19 +48,23 @@ class EffectStatic : public Effect {
 public:
 	void configure(CRGB color);
 
-	bool calcStep() override;
+	bool calcNextFrame() override;
 	void nextColor() override;
 	void prevColor() override;
+	void incIntensity() override;
+	void decIntensity() override;
 
 private:
-	/*! \brief current color */
-	CRGB color;
+	static const int SUBMODE_COUNT = 3;
+
+	/*! \brief current colors */
+	CRGB color[SUBMODE_COUNT];
 
 	/*! \brief Keep track of the current color in the COLOR_PALETTE for the next and prev buttons */
 	int coloridx = 0;
 
-	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
-	bool is_new_color;
+	/*! \brief Keep track of the current submode */
+	int submodeidx = 0;
 };
 
 
@@ -77,7 +73,7 @@ class EffectArc : public Effect {
 public:
 	void configure(CRGB color1, CRGB color2);
 
-	bool calcStep() override;
+	bool calcNextFrame() override;
 //	void nextColor() override;
 //	void prevColor() override;
 
@@ -87,7 +83,7 @@ private:
 	CRGB color1;
 	CRGB color2;
 
-	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
+	/*! \brief Update LEDs in next `calcNextFrame()` when a new color was selected */
 	bool switchColor = false;
 };
 
@@ -96,14 +92,14 @@ class EffectSound : public Effect {
 public:
 	void configure(CRGB color);
 
-	bool calcStep() override;
+	bool calcNextFrame() override;
 
 private:
 	int currentLED = 0;
 
 	CRGB color;
 
-	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
+	/*! \brief Update LEDs in next `calcNextFrame()` when a new color was selected */
 	bool is_new_color;
 };
 
@@ -112,7 +108,7 @@ class EffectStrobe : public Effect {
 public:
 	void configure(CRGB color);//, uint8_t count, uint8_t flashDelay, uint16_t endPause);
 
-	bool calcStep() override;
+	bool calcNextFrame() override;
 
 private:
 	CRGB color;
@@ -121,13 +117,13 @@ private:
     // int flashDelay = 5;
     // int endPause = 100;
 
-	/*! \brief Update LEDs in next `calcStep()` when a new color was selected */
+	/*! \brief Update LEDs in next `calcNextFrame()` when a new color was selected */
 };
 
 class EffectSparkle : public Effect {
     public:
         void configure(CRGB color);
-        bool calcStep() override;
+        bool calcNextFrame() override;
 
     private:
         CRGB color;

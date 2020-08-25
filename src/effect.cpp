@@ -21,10 +21,9 @@ void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t
 	this->delay = delay;
 
 	Serial.printf("Configure led: %d, speed: %d, delay: %d\n", idx, this->speed, this->delay);
-	calcStep();
 }
 
-bool EffectBolt::calcStep() {
+bool EffectBolt::calcNextFrame() {
 
 	if (delay) {
 		fadeToBlackBy(leds, NUM_LEDS, 64);
@@ -70,21 +69,47 @@ bool EffectBolt::calcStep() {
 
 /*********************** Effect Static *************************/
 void EffectStatic::configure(CRGB color) {
-	this->color = color;
-
-	is_new_color = true;
+	this->color[0] = color;
+	for (int i = 1; i < SUBMODE_COUNT; i++) {
+		this->color[i] = COLOR_PALETTE[(coloridx + i) % COLOR_PALETTE_SIZE];
+	}
+	draw = true;
 }
 
-bool EffectStatic::calcStep() {
-	if (!is_new_color) {
+bool EffectStatic::calcNextFrame() {
+	if (!draw) {
 		return false;
 	}
 
-	for (int i = 0; i < NUM_LEDS; i++) {
-		leds[i] = color;
+	switch (submodeidx) {
+		/* single color on all LEDs */
+		case 0:
+		default:
+			for (int i = 0; i < NUM_LEDS; i++) {
+				leds[i] = color[0];
+			}
+			break;
+
+		/* use two colors alternatingly */
+		case 1: {
+			for (int i = 0; i < NUM_LEDS - 1 ; i += 2) {
+				leds[i] = color[0];
+				leds[i + 1] = color[1];
+			}
+			break;
+
+		}
+		/* use three colors alternatingly */
+		case 2:
+			for (int i = 0; i < NUM_LEDS - 2 ; i += 3) {
+				leds[i] = color[0];
+				leds[i + 1] = color[1];
+				leds[i + 2] = color[2];
+			}
+			break;
 	}
 
-	is_new_color = false;
+	draw = false;
 	return true;
 }
 
@@ -92,18 +117,34 @@ void EffectStatic::nextColor() {
 	if (++coloridx >= COLOR_PALETTE_SIZE) {
 		coloridx = 0;
 	}
-	color = COLOR_PALETTE[coloridx];
-	is_new_color = true;
-	Serial.printf("Next color: %d\n", coloridx);
+	for (int i = 0; i < SUBMODE_COUNT; i++) {
+		color[i] = COLOR_PALETTE[(coloridx + i) % COLOR_PALETTE_SIZE];
+	}
+	draw = true;
 }
 
 void EffectStatic::prevColor() {
 	if (--coloridx <= 0) {
 		coloridx = COLOR_PALETTE_SIZE - 1;
 	}
-	color = COLOR_PALETTE[coloridx];
-	is_new_color = true;
-	Serial.printf("Prev color: %d\n", coloridx);
+	for (int i = 0; i < SUBMODE_COUNT; i++) {
+		color[i] = COLOR_PALETTE[modulo(coloridx - i, COLOR_PALETTE_SIZE)];
+	}
+	draw = true;
+}
+
+void EffectStatic::incIntensity() {
+	if (++submodeidx >= SUBMODE_COUNT) {
+		submodeidx = 0;
+	}
+	draw = true;
+}
+
+void EffectStatic::decIntensity() {
+	if (--submodeidx <= 0) {
+		submodeidx = SUBMODE_COUNT - 1;
+	}
+	draw = true;
 }
 
 /*********************** Effect Arc *************************/
@@ -115,7 +156,7 @@ void EffectArc::configure(CRGB color1, CRGB color2) {
 #define ARC_INITIAL_PAUSE 10
 #define ARC_NUMBER 50
 #define ARC_PAUSE 15
-bool EffectArc::calcStep() {
+bool EffectArc::calcNextFrame() {
 	if (delay) {
 		delay--;
 		return false;
@@ -144,26 +185,26 @@ void EffectSound::configure(CRGB color) {
 	is_new_color = true;
 }
 
-bool EffectSound::calcStep() {
-    int peak = 0;
-    uint16_t peak_counter = 0;
+bool EffectSound::calcNextFrame() {
+//	int peak = 0;
+//	uint16_t peak_counter = 0;
 	for (int i = 0; i < NUM_LEDS; i++) {
 		if (Serial2.available()) {
 			uint8_t value = Serial2.read();
 			if ( value == 255) {
 				currentLED = 0;
-                /*  Keep this for Peak Output
-                peak = Serial2.read();
-                fadeToBlackBy(leds, NUM_LEDS, 192);
-                uint8_t counter_peak = 0;
-                while ( peak > 0 ) {
-                    leds[counter_peak].setRGB(255, 0, 0);
-                    counter_peak++;
-                    peak--;
-                    leds[counter_peak].setRGB(255, 0, 0);
-                }
-                */
-                
+				/*  Keep this for Peak Output
+				peak = Serial2.read();
+				fadeToBlackBy(leds, NUM_LEDS, 192);
+				uint8_t counter_peak = 0;
+				while ( peak > 0 ) {
+				leds[counter_peak].setRGB(255, 0, 0);
+				counter_peak++;
+				peak--;
+				leds[counter_peak].setRGB(255, 0, 0);
+				}
+				*/
+
 				Serial2.write(84);
 				return true;
 			}
@@ -179,7 +220,7 @@ void EffectStrobe::configure(CRGB color) { //, uint8_t count, uint8_t flashDelay
 	this->color = color;
 }
 
-bool EffectStrobe::calcStep() {
+bool EffectStrobe::calcNextFrame() {
     count++;
     Serial.println(count);
     if ( count >= 200 ) {
@@ -207,7 +248,7 @@ void EffectSparkle::configure(CRGB color) {
     this->color = color;
 }
 
-bool EffectSparkle::calcStep() {
+bool EffectSparkle::calcNextFrame() {
     if ( count == 0 ) {
         pixel = random(NUM_LEDS);
         leds[pixel] = color;

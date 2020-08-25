@@ -24,8 +24,21 @@ extern EffectStrobe strobeEffect;
 extern EffectSparkle sparkleEffect;
 extern EffectMeteor meteorEffect;
 
+/*! \brief Increase global LED brightness */
 void increaseBrightness();
+
+/*! \brief Decrease global LED brightness */
 void decreaseBrightness();
+
+/*! \brief Calculate the modulo of `a mod b`
+ *
+ * This is different from the remainder `a % b` if the divisor `a` is negative:
+ * `-1 % 5 = -1`
+ * `-1 mod 5 = 4`
+ *
+ * This function is helpful for array access in the functions which decrease the array index
+ */
+int modulo(int a, int b);
 
 
 #endif /* end of include guard: GLOBALS_H */

@@ -47,3 +47,11 @@ void decreaseBrightness() {
 	Serial.printf("New brightness: %d\n", brightness);
 #endif
 }
+
+int modulo(int a, int b) {
+  int m = a % b;
+  if (m < 0) {
+    m = (b < 0) ? m - b : m + b;
+  }
+  return m;
+}
