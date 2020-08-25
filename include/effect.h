@@ -135,4 +135,16 @@ class EffectSparkle : public Effect {
         int pixel;
 };
 
+/*! \brief Effect for meteors */
+class EffectMeteor : public Effect {
+    public:
+        void configure(CRGB color);
+        bool calcStep() override;
+
+    private:
+        CRGB color;
+        int meteorSize = 20;
+        int i = 0;
+};
+
 #endif /* end of include guard: EFFECT_H */

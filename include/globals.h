@@ -22,6 +22,7 @@ extern EffectArc arcEffect;
 extern EffectSound soundEffect;
 extern EffectStrobe strobeEffect;
 extern EffectSparkle sparkleEffect;
+extern EffectMeteor meteorEffect;
 
 void increaseBrightness();
 void decreaseBrightness();
