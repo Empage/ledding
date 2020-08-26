@@ -218,9 +218,6 @@ bool EffectSound::calcNextFrame() {
 /*********************** Effect Strobe *************************/
 void EffectStrobe::configure(CRGB color) { //, uint8_t count, uint8_t flashDelay, uint16_t endPause) {
 	this->color = color;
-	// this->count = count;
-	// this->flashDelay = flashDelay;
-	// this->endPause = endPause;
 }
 
 bool EffectStrobe::calcNextFrame() {
@@ -261,6 +258,34 @@ bool EffectSparkle::calcNextFrame() {
     if ( count >= 1 ) {
         leds[pixel] = CRGB::Black;
         count = 0;
+        return true;
+    }
+}
+
+/*********************** Effect MeteorRain *************************/
+void EffectMeteor::configure(CRGB color) {
+    this->color = color;
+}
+
+bool EffectMeteor::calcNextFrame() {
+    if ( i < NUM_LEDS + NUM_LEDS ) {
+        for ( int j = 0; j < NUM_LEDS; j++ ) {
+            if ( random(10) > 5 ) {
+                leds[j].fadeToBlackBy(64);
+            }
+        }
+
+        for ( int j = 0; j < 10; j++ ) {
+            if (( i-j < NUM_LEDS) && ( i-j >= 0 )) {
+                leds[i-j] = CRGB::Green;
+            }
+        }
+        i++;
+        delay(30);
+        return true;
+    } else {
+        i = 0;
+		fill_solid(leds, NUM_LEDS, CRGB::Black);
         return true;
     }
 }

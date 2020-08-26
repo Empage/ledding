@@ -17,8 +17,9 @@ public:
 		ANIMATOR_SOUND,
         ANIMATOR_STROBE,
         ANIMATOR_SPARKLE,
+        ANIMATOR_METEOR,
 	};
-	static const int ANIMATOR_MODE_SIZE = 6;
+	static const int ANIMATOR_MODE_SIZE = 7;
 
 	explicit Animator();
 

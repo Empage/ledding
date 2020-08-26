@@ -10,6 +10,7 @@ EffectArc arcEffect;
 EffectSound soundEffect;
 EffectStrobe strobeEffect;
 EffectSparkle sparkleEffect;
+EffectMeteor meteorEffect;
 
 void increaseBrightness() {
 	uint8_t brightness = FastLED.getBrightness();

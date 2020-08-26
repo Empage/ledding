@@ -46,6 +46,8 @@ void setup() {
 	animator.addEffect(Animator::ANIMATOR_STROBE, &strobeEffect);
 	sparkleEffect.configure(CRGB::White);
 	animator.addEffect(Animator::ANIMATOR_SPARKLE, &sparkleEffect);
+	meteorEffect.configure(CRGB::Blue);
+	animator.addEffect(Animator::ANIMATOR_METEOR, &meteorEffect);
 	
     animator.mode = Animator::ANIMATOR_STROBE;
 
