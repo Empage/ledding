@@ -4,8 +4,11 @@
 /* secret configuration */
 /************************/
 
-const char* SSID = "musicstation";
-const char* WIFI_PSK = "testtesttest";
+/* WLAN_SSID passed in via platform.ini build_flags from set-environment */
+const char* SSID = WLAN_SSID;
+/* WLAN_PSK passed in via platform.ini build_flags from set-environment */
+const char* WIFI_PSK = WLAN_PSK;
+
 const char* OTA_PW = "secretpw0";
 
 
@@ -13,11 +16,8 @@ const char* OTA_PW = "secretpw0";
 /* static configuration */
 /************************/
 
-#ifdef MAITE
-const IPAddress OWN_IP_ADDRESS(192, 168, 2, 12);
-#else /* partyraum */
-const IPAddress OWN_IP_ADDRESS(192, 168, 5, 11);
-#endif
+/* ESP_IP passed in via platform.ini build_flags from set-environment */
+const IPAddress OWN_IP_ADDRESS(ESP_IP);
 const IPAddress SUBNET(255, 255, 255, 0);
 
 const uint16_t OTA_PORT = 3232;

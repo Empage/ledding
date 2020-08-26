@@ -151,7 +151,18 @@ mv .pio/build/ota/compile_commands.json .
 ```
 
 ### Programming
-To program the ESP32, issue `make upload`, then hold down the `BOOT` button on the ESP32-board until the upload starts.
+Important configuration is passed via environment variables (such as WLAN_SSID, PSK and IPs).
+To work with a specific enviroment, we can source the relevant enviroment:
+```
+source env-partyraum
+```
+After that, we can use the Makefile targets for programming:
+- To program the ESP32 via USB cable, issue `make upload`, then hold down the `BOOT` button on the ESP32-board until the upload starts.
+- For OTA programming, issue `make ota`
+
+The `env-partyraum` is the default environment and doesn't need to be sourced, but we can use this file to create custom
+environments such as `env-maite` or `env-testbed` (not commited due to secret WLAN PSK).
+
 
 ### Debugging using JTAG
 On-target debugging with GDB is possible using JTAG. I have the `FT4232H-56Q MiniModule` as the USB2JTAG adapter. The following steps are necessary:
