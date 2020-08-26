@@ -23,21 +23,31 @@ void EffectBolt::configure(uint16_t startled, int8_t speed, CRGB color, uint16_t
 	Serial.printf("Configure led: %d, speed: %d, delay: %d\n", idx, this->speed, this->delay);
 }
 
+
 bool EffectBolt::calcNextFrame() {
 
 	if (delay) {
-		fadeToBlackBy(leds, NUM_LEDS, 64);
+		fadeToBlackBy(leds, NUM_LEDS, 32);
 		delay--;
 		return true;
 	}
 
-	if (counter < 5) {
-		counter++;
-		return false;
+	int BOLT_LEN = 20;
+
+	/* first LED is fractional */
+	int ledpos = idx / 32;
+	int frac = idx % 32;
+
+	if (frac == 0) {
+//		leds[ledpos] += CHSV(0, 255, 255);
+		for (int i = 0; i <= ledpos; i++) {
+			leds[i] += CHSV(0, 255, 255);
+		}
+	} else {
+		leds[ledpos + 1] += CHSV(0, 255, LIN_EYE[frac]);
 	}
 
-	counter = 0;
-
+#if 0
 	if (speed > 0) {
 		for (int j = idx; j < idx + speed && j < NUM_LEDS; j+=2) {
 			leds[j] += color;
@@ -47,6 +57,7 @@ bool EffectBolt::calcNextFrame() {
 			leds[j] += color;
 		}
 	}
+#endif
 
 	idx += speed;
 
@@ -54,17 +65,27 @@ bool EffectBolt::calcNextFrame() {
 //		speed *= -1;
 //	}
 	/* send next bolt in same direction */
-	if (speed > 0 && idx >= NUM_LEDS - 1) {
+	if (speed > 0 && idx >= (NUM_LEDS - 1) * 32) {
+		Serial.println("Start from beginning");
+		fill_solid(leds, NUM_LEDS, CRGB::Black);
 		idx = 0;
 		if (++coloridx >= COLOR_PALETTE_SIZE) {
 			coloridx = 0;
 		}
 		this->color = COLOR_PALETTE[coloridx];
-		delay = 200;
+		delay = 8;
 	}
 
-	fadeToBlackBy(leds, NUM_LEDS, 64);
+//	fadeToBlackBy(leds, NUM_LEDS, 32);
 	return true;
+}
+
+void EffectBolt::incIntensity() {
+	speed += 8;
+}
+
+void EffectBolt::decIntensity() {
+	speed -= 8;
 }
 
 /*********************** Effect Static *************************/
@@ -244,22 +265,69 @@ bool EffectStrobe::calcNextFrame() {
 }
 
 /*********************** Effect Sparkle *************************/
-void EffectSparkle::configure(CRGB color) {
-    this->color = color;
+void EffectSparkle::configure(CRGB color, bool soft) {
+	this->color = color;
+	this->soft = soft;
+
+	if (soft) {
+		for (int i = 0; i < CNT; i++) {
+			count[i] = random(50) * -1;
+		}
+	}
 }
 
 bool EffectSparkle::calcNextFrame() {
-    if ( count == 0 ) {
-        pixel = random(NUM_LEDS);
-        leds[pixel] = color;
-        count++;
-        return true;
-    }
-    if ( count >= 1 ) {
-        leds[pixel] = CRGB::Black;
-        count = 0;
-        return true;
-    }
+	/* catch a mode change */
+	if (draw) {
+		fill_solid(leds, NUM_LEDS, CRGB::Black);
+		draw = false;
+	}
+
+	if (soft) {
+		for (int i = 0; i < CNT; i++) {
+			count[i]++;
+			if (count[i] < 0) {
+				Serial.printf("WAIT %d\n", pixel[i]);
+				/* wait for this sparkle */
+				continue;
+			}
+			if (count[i] == 0) {
+				pixel[i] = random(NUM_LEDS);
+				continue;
+			}
+			if (count[i] < 64) {
+				Serial.printf("LIGHT UP %d\n", pixel[i]);
+				/* slowly light it up */
+				leds[pixel[i]].setHSV(0, 0, count[i] * 4);
+				continue;
+			}
+			if (count[i] < 128) {
+				Serial.printf("DIM %d\n", pixel[i]);
+				/* slowly dim it down */
+				leds[pixel[i]].setHSV(0, 0, (127 - count[i]) * 4);
+				continue;
+			}
+			
+			Serial.printf("KILL %d\n", pixel[i]);
+			/* sparkle gone, schedule next */
+			leds[pixel[i]] = 0;
+			count[i] = random(50) * -1;
+		}
+
+	/* !soft */
+	} else {
+		if ( count[0] == 0 ) {
+			pixel[0] = random(NUM_LEDS);
+			leds[pixel[0]] = color;
+			count[0]++;
+			return true;
+		}
+		if ( count[0] >= 1 ) {
+			leds[pixel[0]] = CRGB::Black;
+			count[0] = 0;
+			return true;
+		}
+	}
 }
 
 /*********************** Effect MeteorRain *************************/
