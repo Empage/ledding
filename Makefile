@@ -55,7 +55,7 @@ monitor:
 tmp: build
 
 # target for my vim shortcut
-tmp2: uploadOTA
+tmp2: ota
 
 # upload using programmer
 #program:
