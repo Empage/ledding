@@ -267,7 +267,7 @@ void EffectMeteor::configure(CRGB color) {
     this->color = color;
 }
 
-bool EffectMeteor::calcStep() {
+bool EffectMeteor::calcNextFrame() {
     if ( i < NUM_LEDS + NUM_LEDS ) {
         for ( int j = 0; j < NUM_LEDS; j++ ) {
             if ( random(10) > 5 ) {

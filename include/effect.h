@@ -135,7 +135,7 @@ class EffectSparkle : public Effect {
 class EffectMeteor : public Effect {
     public:
         void configure(CRGB color);
-        bool calcStep() override;
+        bool calcNextFrame() override;
 
     private:
         CRGB color;
