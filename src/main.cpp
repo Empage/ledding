@@ -52,9 +52,9 @@ void setup() {
     animator.mode = Animator::ANIMATOR_STROBE;
 
 	/* setup specifics for individual installation */
-#ifdef MAITE
+#ifdef CONF_MAITE
 	setupMaite();
-#else
+#else /* CONF_PARTYRAUM */
 	setupPartyraum();
 #endif
 

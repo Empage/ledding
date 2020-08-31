@@ -4,18 +4,26 @@ all: build
 
 # build project in release configuration
 build:
-	platformio -c vim run -e cable
+	PLATFORMIO_BUILD_FLAGS=`./set-environment.sh build_flags` \
+	PLATFORMIO_UPLOAD_PORT=`./set-environment.sh cable_port` \
+	platformio -c vim run
 
 # build project in debug configuration
 debug:
+	PLATFORMIO_BUILD_FLAGS=`./set-environment.sh build_flags` \
+	PLATFORMIO_UPLOAD_PORT=`./set-environment.sh cable_port` \
 	platformio -c vim run -e debug
 
-# build and upload (if no errors) using cable environment
+# build and upload (if no errors) using serial cable
 upload:
-	platformio -c vim run -e cable --target upload
+	PLATFORMIO_BUILD_FLAGS=`./set-environment.sh build_flags` \
+	PLATFORMIO_UPLOAD_PORT=`./set-environment.sh cable_port` \
+	platformio -c vim run --target upload
 
 # build and upload (if no errors) using over-the-air upload
-uploadOTA:
+ota:
+	PLATFORMIO_BUILD_FLAGS=`./set-environment.sh build_flags` \
+	PLATFORMIO_UPLOAD_PORT=`./set-environment.sh ota_port` \
 	platformio -c vim run -e ota --target upload
 
 # build, upload via JTAG and start debugger
@@ -47,7 +55,7 @@ monitor:
 tmp: build
 
 # target for my vim shortcut
-tmp2: uploadOTA
+tmp2: ota
 
 # upload using programmer
 #program:

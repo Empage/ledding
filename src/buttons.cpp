@@ -113,7 +113,7 @@ void Buttons::activate(uint8_t button_pin) {
 #ifdef DEV_MODE
 		/* use the dev button when there is not enough tough buttons available on dev board */
 		case DEV_BUTTON_PIN:
-			animator.incIntensity();
+			animator.nextMode();
 			break;
 #endif
 
