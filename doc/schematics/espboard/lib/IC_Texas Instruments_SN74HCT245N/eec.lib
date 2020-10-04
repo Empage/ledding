@@ -1,0 +1,66 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# Texas Instruments SN74HCT245N
+#
+DEF SN74HCT245N U 0 40 Y Y 1 L N
+F0 "U" 0 200 50 H V L CNN 
+F1 "SN74HCT245N" 0 300 50 H V L CNN 
+F2 "Texas_Instruments-SN74HCT245N-0-0-*" 0 400 50 H I L CNN 
+F3 "http://www.ti.com/lit/ds/symlink/sn74hct245.pdf" 0 500 50 H I L CNN 
+F4 "+85°C" 0 600 50 H I L CNN "ambient temperature range high"
+F5 "-40°C" 0 700 50 H I L CNN "ambient temperature range low"
+F6 "No" 0 800 50 H I L CNN "automotive"
+F7 "IC" 0 900 50 H I L CNN "category"
+F8 "Integrated Circuits (ICs)" 0 1000 50 H I L CNN "device class L1"
+F9 "Logic ICs" 0 1100 50 H I L CNN "device class L2"
+F10 "Drivers and Transceivers" 0 1200 50 H I L CNN "device class L3"
+F11 "IC TXRX NON-INVERT 5.5V 20DIP" 0 1300 50 H I L CNN "digikey description"
+F12 "296-1612-5-ND" 0 1400 50 H I L CNN "digikey part number"
+F13 "5.08mm" 0 1500 50 H I L CNN "height"
+F14 "DIP794W46P254L2540H508Q20" 0 1600 50 H I L CNN "ipc land pattern name"
+F15 "Yes" 0 1700 50 H I L CNN "lead free"
+F16 "64376d108c417d40" 0 1800 50 H I L CNN "library id"
+F17 "Non-Inverting" 0 1900 50 H I L CNN "logic function desc"
+F18 "Texas Instruments" 0 2000 50 H I L CNN "manufacturer"
+F19 "+150°C" 0 2100 50 H I L CNN "max junction temp"
+F20 "5.5V" 0 2200 50 H I L CNN "max supply voltage"
+F21 "4.5V" 0 2300 50 H I L CNN "min supply voltage"
+F22 "Bus Transceivers Tri-State Octal Bus" 0 2400 50 H I L CNN "mouser description"
+F23 "595-SN74HCT245N" 0 2500 50 H I L CNN "mouser part number"
+F24 "8-80uA" 0 2600 50 H I L CNN "nominal supply current"
+F25 "8" 0 2700 50 H I L CNN "number of circuits"
+F26 "2" 0 2800 50 H I L CNN "number of inputs"
+F27 "2" 0 2900 50 H I L CNN "number of outputs"
+F28 "PDIP20" 0 3000 50 H I L CNN "package"
+F29 "20ns" 0 3100 50 H I L CNN "propagation delay"
+F30 "Yes" 0 3200 50 H I L CNN "rohs"
+F31 "0.51mm" 0 3300 50 H I L CNN "standoff height"
+F32 "+85°C" 0 3400 50 H I L CNN "temperature range high"
+F33 "-40°C" 0 3500 50 H I L CNN "temperature range low"
+DRAW
+X VCC 20 100 0 100 R 40 40 1 1 W 
+X ~OE~ 19 100 -300 100 R 40 40 1 1 I 
+X A1 2 100 -800 100 R 40 40 1 1 B 
+X A2 3 100 -900 100 R 40 40 1 1 B 
+X A3 4 100 -1000 100 R 40 40 1 1 B 
+X A4 5 100 -1100 100 R 40 40 1 1 B 
+X A5 6 100 -1200 100 R 40 40 1 1 B 
+X A6 7 100 -1300 100 R 40 40 1 1 B 
+X A7 8 100 -1400 100 R 40 40 1 1 B 
+X A8 9 100 -1500 100 R 40 40 1 1 B 
+X B1 18 1300 -800 100 L 40 40 1 1 B 
+X B2 17 1300 -900 100 L 40 40 1 1 B 
+X B3 16 1300 -1000 100 L 40 40 1 1 B 
+X B4 15 1300 -1100 100 L 40 40 1 1 B 
+X B5 14 1300 -1200 100 L 40 40 1 1 B 
+X B6 13 1300 -1300 100 L 40 40 1 1 B 
+X B7 12 1300 -1400 100 L 40 40 1 1 B 
+X B8 11 1300 -1500 100 L 40 40 1 1 B 
+X DIR 1 100 -500 100 R 40 40 1 1 I 
+X GND 10 1300 -1700 100 L 40 40 1 1 W 
+S 200 100 1200 -1800 1 1 0 f
+ENDDRAW
+ENDDEF
+#
+# End Library
