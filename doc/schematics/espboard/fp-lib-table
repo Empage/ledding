@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name ESP32-DEVKITV1)(type KiCad)(uri ${KIPRJMOD}/lib/ESP32-DEVKITV1)(options "")(descr ""))
+  (lib (name eec)(type KiCad)(uri "${KIPRJMOD}/lib/IC_Texas Instruments_SN74HCT245N/eec.pretty")(options "")(descr ""))
+)
