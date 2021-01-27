@@ -33,7 +33,7 @@ extern const char* OTA_PW;
 #ifdef MAITE
 #define NUM_LEDS 150
 #else
-#define NUM_LEDS 148
+#define NUM_LEDS 480
 #endif
 
 

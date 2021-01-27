@@ -15,6 +15,7 @@ void Buttons::handleButtons() {
 	// Serial.printf("Touch button readings:\n");
 #endif
 
+#if 0
 	for (int i = 0; i < TOUCH_BUTTON_COUNT; i++) {
 		uint16_t value = touchRead(buttons[i]);
 #ifdef SERIAL_PRINT
@@ -47,6 +48,7 @@ void Buttons::handleButtons() {
 				break;
 		}
 	}
+#endif
 
 #ifdef SERIAL_PRINT
 	// Serial.printf("\n");

@@ -133,7 +133,7 @@ class EffectSparkle : public Effect {
 
 	private:
 		/*! \brief Number of simultaneous sparkles */
-		static const int CNT = 32;
+		static const int CNT = 64;
 
 		CRGB color;
 		int count[CNT] = {0};

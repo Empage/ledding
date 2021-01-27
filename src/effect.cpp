@@ -280,6 +280,9 @@ bool EffectSparkle::calcNextFrame() {
 	/* catch a mode change */
 	if (draw) {
 		fill_solid(leds, NUM_LEDS, CRGB::Black);
+		for (int i = 0; i < NUM_LEDS; i++) {
+			leds[i] += CRGB(50, 0, 0);
+		}
 		draw = false;
 	}
 
@@ -298,21 +301,23 @@ bool EffectSparkle::calcNextFrame() {
 			if (count[i] < 64) {
 				Serial.printf("LIGHT UP %d\n", pixel[i]);
 				/* slowly light it up */
-				leds[pixel[i]].setHSV(0, 0, count[i] * 4);
+				leds[pixel[i]].setHSV(170, 255, count[i] * 4);
 				continue;
 			}
 			if (count[i] < 128) {
 				Serial.printf("DIM %d\n", pixel[i]);
 				/* slowly dim it down */
-				leds[pixel[i]].setHSV(0, 0, (127 - count[i]) * 4);
+				leds[pixel[i]].setHSV(170, 255, (127 - count[i]) * 4);
 				continue;
 			}
 			
 			Serial.printf("KILL %d\n", pixel[i]);
 			/* sparkle gone, schedule next */
 			leds[pixel[i]] = 0;
+			leds[pixel[i]] = CRGB(50, 0, 0);
 			count[i] = random(50) * -1;
 		}
+
 
 	/* !soft */
 	} else {
