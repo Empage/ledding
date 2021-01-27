@@ -306,6 +306,7 @@ U_1.2 = 0.175 * 3.375 A = 0.591 V
 
 ## TODO
 1. Add schematics
+    1. Add a RPI connection to the `BOOT` button to be able to flash without manual interaction
 1. Use ESP Log functions instead of serial directly for more finegrained logging
 
 ## Lessons learned
