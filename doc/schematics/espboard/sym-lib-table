@@ -1,4 +1,4 @@
 (sym_lib_table
-  (lib (name eec)(type Legacy)(uri "${KIPRJMOD}/lib/IC_Texas Instruments_SN74HCT245N/eec.lib")(options "")(descr ""))
-  (lib (name ESP32DEVKITV1)(type Legacy)(uri ${KIPRJMOD}/lib/ESP32-DEVKITV1/ESP32DEVKITV1.lib)(options "")(descr ""))
+  (lib (name eec)(type Legacy)(uri "${KIPRJMOD}/../lib/IC_Texas Instruments_SN74HCT245N/eec.lib")(options "")(descr ""))
+  (lib (name ESP32DEVKITV1)(type Legacy)(uri ${KIPRJMOD}/../lib/ESP32-DEVKITV1/ESP32DEVKITV1.lib)(options "")(descr ""))
 )
