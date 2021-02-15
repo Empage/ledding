@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name ESP32DEVKITV1)(type Legacy)(uri /home/mph/workspace/ledding/doc/schematics/lib/ESP32-DEVKITV1/ESP32DEVKITV1.lib)(options "")(descr ""))
+  (lib (name eec)(type Legacy)(uri "/home/mph/workspace/ledding/doc/schematics/lib/IC_Texas Instruments_SN74HCT245N/eec.lib")(options "")(descr ""))
+)
