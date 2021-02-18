@@ -6,4 +6,5 @@
 compile_commands.json
 env-maite
 env-matthis
+env-thias
 session.nvim
