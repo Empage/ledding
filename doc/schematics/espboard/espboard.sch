@@ -494,4 +494,24 @@ F 3 "~" H 6050 4000 50  0001 C CNN
 	1    6050 4000
 	1    0    0    -1  
 $EndComp
+Text Notes 1400 2400 0    50   ~ 0
+Black
+Text Notes 1400 2300 0    50   ~ 0
+Brown
+Text Notes 1400 2200 0    50   ~ 0
+Red
+Text Notes 1400 2100 0    50   ~ 0
+Orange
+Text Notes 1400 2000 0    50   ~ 0
+Yellow
+Text Notes 1400 1900 0    50   ~ 0
+Green
+Text Notes 1400 1800 0    50   ~ 0
+Blue
+Text Notes 1400 1700 0    50   ~ 0
+Purple
+Text Notes 1400 1600 0    50   ~ 0
+Gray
+Text Notes 1400 1500 0    50   ~ 0
+White
 $EndSCHEMATC
