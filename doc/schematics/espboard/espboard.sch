@@ -105,8 +105,6 @@ F 3 "" H 7900 4100 50  0001 C CNN
 	1    7900 4100
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	5050 4400 4750 4400
 $Comp
 L Connector_Generic:Conn_01x03 J2
 U 1 1 5F7F6F7D
@@ -138,17 +136,11 @@ UART TX
 Text Notes 5500 4000 0    50   ~ 0
 UART RX
 Wire Wire Line
-	3350 3600 3100 3600
-Wire Wire Line
-	3100 3600 3100 1700
-Wire Wire Line
 	3100 1700 2100 1700
 Wire Wire Line
 	2100 1800 3000 1800
 Wire Wire Line
-	3000 1800 3000 3700
-Wire Wire Line
-	3000 3700 3350 3700
+	3000 1800 3000 3600
 Wire Wire Line
 	3350 4000 2900 4000
 Wire Wire Line
@@ -201,15 +193,9 @@ Wire Wire Line
 Wire Wire Line
 	2100 1600 5100 1600
 Wire Wire Line
-	5100 1600 5100 4100
-Wire Wire Line
-	5100 4100 4750 4100
-Wire Wire Line
 	2100 1500 5200 1500
 Wire Wire Line
-	5200 1500 5200 4300
-Wire Wire Line
-	5200 4300 4750 4300
+	5200 1500 5200 4100
 Text Notes 4700 4200 0    50   ~ 0
 Internal LED
 Text Notes 2150 2100 0    50   ~ 0
@@ -297,10 +283,6 @@ Wire Wire Line
 Wire Wire Line
 	8350 1650 8350 1750
 Wire Wire Line
-	4750 3500 6300 3500
-Wire Wire Line
-	6300 3500 6300 3300
-Wire Wire Line
 	6300 2450 6300 2400
 Wire Wire Line
 	8150 3800 8150 3600
@@ -312,11 +294,7 @@ Wire Wire Line
 Wire Wire Line
 	8150 3600 7800 3600
 Wire Wire Line
-	4750 3100 6600 3100
-Wire Wire Line
 	4750 3200 6600 3200
-Wire Wire Line
-	6300 3300 6600 3300
 Wire Wire Line
 	7800 3800 8150 3800
 Wire Wire Line
@@ -410,7 +388,6 @@ NoConn ~ 3350 3400
 NoConn ~ 3350 3300
 NoConn ~ 3350 3200
 NoConn ~ 3350 3100
-NoConn ~ 3350 4400
 $Comp
 L power:PWR_FLAG #FLG0102
 U 1 1 5F90CF4A
@@ -429,8 +406,6 @@ Wire Wire Line
 	6450 1400 6600 1400
 Connection ~ 6450 1400
 NoConn ~ 4750 4200
-Wire Wire Line
-	5050 4650 5050 4400
 Wire Wire Line
 	3000 4500 3350 4500
 $Comp
@@ -457,12 +432,12 @@ Wire Wire Line
 $Comp
 L power:GND #PWR0101
 U 1 1 5F7CC7B9
-P 5050 4650
-F 0 "#PWR0101" H 5050 4400 50  0001 C CNN
-F 1 "GND" H 5055 4477 50  0000 C CNN
-F 2 "" H 5050 4650 50  0001 C CNN
-F 3 "" H 5050 4650 50  0001 C CNN
-	1    5050 4650
+P 3200 4650
+F 0 "#PWR0101" H 3200 4400 50  0001 C CNN
+F 1 "GND" H 3205 4477 50  0000 C CNN
+F 2 "" H 3200 4650 50  0001 C CNN
+F 3 "" H 3200 4650 50  0001 C CNN
+	1    3200 4650
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -514,4 +489,43 @@ Text Notes 1400 1600 0    50   ~ 0
 Gray
 Text Notes 1400 1500 0    50   ~ 0
 White
+Wire Wire Line
+	5850 4100 5450 4100
+Wire Wire Line
+	5450 4100 5450 5100
+Wire Wire Line
+	5450 5100 4100 5100
+Wire Wire Line
+	4100 5100 4100 4600
+Text Notes 3900 4600 0    50   ~ 0
+BootBtn
+Wire Wire Line
+	5600 3300 5600 3100
+Wire Wire Line
+	5600 3100 4750 3100
+Wire Wire Line
+	5600 3300 6600 3300
+Wire Wire Line
+	6600 3100 6100 3100
+Wire Wire Line
+	6100 3500 4750 3500
+Wire Wire Line
+	6100 3100 6100 3500
+Wire Wire Line
+	3100 3700 3350 3700
+Wire Wire Line
+	3100 1700 3100 3700
+Wire Wire Line
+	3000 3600 3350 3600
+Wire Wire Line
+	3200 4650 3200 4400
+Wire Wire Line
+	3200 4400 3350 4400
+NoConn ~ 4750 4400
+Wire Wire Line
+	5100 4300 4750 4300
+Wire Wire Line
+	5100 1600 5100 4300
+Wire Wire Line
+	5200 4100 4750 4100
 $EndSCHEMATC
