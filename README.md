@@ -22,6 +22,7 @@ Fancy LED project
         * [One time setup configuration](#one-time-setup-configuration)
         * [Start a debugging session](#start-a-debugging-session)
 * [Specifics for Partyraum Installation](#specifics-for-partyraum-installation)
+    * [I/O](#io)
 * [Specifics for Maite Installation](#specifics-for-maite-installation)
     * [Box interfaces](#box-interfaces)
     * [Buttons](#buttons)
@@ -255,6 +256,17 @@ Theoretically, we need
 ```
 
 The Meanwell LRS-200-12 is a good fit.
+
+### I/O
+
+- Button 1: Brightness
+- Button 2: Mode
+- Button 3: Color
+- Button 4: Intensity
+- LED 1: WiFi connected?
+- LED 2: Serial data from Raspberry Pi received last second
+- LED 3: TODO
+- LED 4: TODO
 
 ## Specifics for Maite Installation
 LED stripes WS2812B

@@ -18,6 +18,12 @@ public:
 	void handleButtons();
 
 private:
+#ifdef DEV_MODE
+	/*! \brief Slow down dev button presses, too */
+	int dev_button_state = 0;
+#endif
+
+#ifdef HAS_TOUCHBUTTONS
 	uint8_t buttons[TOUCH_BUTTON_COUNT] = {
 #ifndef DEBUG_JTAG
 		BUTTON_BRT_INC,
@@ -42,16 +48,46 @@ private:
 	/*! \brief Remember the intermediate buttons states */
 	BUTTON_STATE button_states[TOUCH_BUTTON_COUNT] = {UNPRESSED};
 
-#ifdef DEV_MODE
-	/*! \brief Slow down dev button presses, too */
-	int dev_button_state = 0;
+
+	/*! \brief Read out touch buttons */
+	void handleButtonsTouch();
+#endif
+
+#ifdef HAS_PD_BUTTONS
+	uint8_t buttons[PD_BUTTON_COUNT] = {
+		BUTTON_BRT_INC,
+		BUTTON_MODE_NEXT,
+		BUTTON_COLOR_NEXT,
+		BUTTON_INTENSITY_INC,
+	};
+
+	enum BUTTON_STATE {
+		UNPRESSED, /* when button was not pressed at all */
+		PREPRESSED,/* first stage of button press, but not considered active yet due to bogus reads */
+		PRESSED_0, /* button is considered pressed, related action is executed */
+		PRESSED_1, /* button is still pressed but we don't want to toggle so fast, stage 1 */
+		PRESSED_2, /* button is still pressed but we don't want to toggle so fast, stage 2 */
+	};
+
+	/*! \brief Remember the intermediate buttons states */
+	BUTTON_STATE button_states[PD_BUTTON_COUNT] = {UNPRESSED};
+
+	/*! \brief Read out real pull down buttons */
+	void handleButtonsPullDown();
 #endif
 
 	/*! \brief Activate the associated action
 	 *
 	 * \param button_pin the button define
 	 */
-	void activate(uint8_t button_pin);
+	void activateTouch(uint8_t button_pin);
+
+	/*! \brief Activate the associated action
+	 *
+	 * \param button_pin the button define
+	 */
+	void activatePullDown(uint8_t button_pin);
+
 };
 
 #endif /* end of include guard: BUTTONS_H_BUNPSFAL */

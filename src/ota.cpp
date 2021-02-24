@@ -72,6 +72,11 @@ void Ota::handleOta() {
 		Serial.printf("Connected to %s: ", SSID);
 		Serial.println(WiFi.localIP());
 #endif
+
+#ifdef CONF_PARTYRAUM
+        /* indicate WiFi connection */
+        digitalWrite(STATUS_LED_1, HIGH);
+#endif
 	}
 
 	ArduinoOTA.handle();
