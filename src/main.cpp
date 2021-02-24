@@ -11,6 +11,7 @@ void setupMaite() {
 	animator.mode = Animator::ANIMATOR_CONSTANT;
 }
 
+#ifdef CONF_PARTYRAUM
 void setupPartyraum() {
 	/* setup connection to RPi */
     Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
@@ -22,7 +23,18 @@ void setupPartyraum() {
 	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
 
 	animator.mode = Animator::ANIMATOR_CONSTANT;
+
+	pinMode(STATUS_LED_1, OUTPUT);
+	pinMode(STATUS_LED_2, OUTPUT);
+	pinMode(STATUS_LED_3, OUTPUT);
+	pinMode(STATUS_LED_4, OUTPUT);
+
+	digitalWrite(STATUS_LED_1, HIGH);
+	digitalWrite(STATUS_LED_2, HIGH);
+	digitalWrite(STATUS_LED_3, HIGH);
+	digitalWrite(STATUS_LED_4, HIGH);
 }
+#endif /* CONF_PARTYRAUM */
 
 void setup() {
 	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -52,8 +64,10 @@ void setup() {
 	/* setup specifics for individual installation */
 #ifdef CONF_MAITE
 	setupMaite();
-#else /* CONF_PARTYRAUM */
+#elif CONF_PARTYRAUM /* CONF_PARTYRAUM */
 	setupPartyraum();
+#else
+	setupMaite();
 #endif
 
 #ifdef DEV_MODE
