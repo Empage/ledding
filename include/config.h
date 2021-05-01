@@ -13,7 +13,7 @@
 /* dynamic configuration */
 /*************************/
 /*! \brief Print all actions on serial */
-#define SERIAL_PRINT
+//#define SERIAL_PRINT
 
 /*! \brief Activate developing mode, currently
  * - extra button on dev board
@@ -30,10 +30,12 @@ extern const char* OTA_PW;
 /* static configuration */
 /************************/
 /*! \brief Total number of LEDs */
-#ifdef MAITE
-#define NUM_LEDS 150
+#ifdef CONF_MAITE
+	#define NUM_LEDS 150
+#elif CONF_THIAS
+	#define NUM_LEDS 120
 #else
-#define NUM_LEDS 480
+	#define NUM_LEDS 480
 #endif
 
 

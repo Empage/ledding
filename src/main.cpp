@@ -11,6 +11,10 @@ void setupMaite() {
 	animator.mode = Animator::ANIMATOR_CONSTANT;
 }
 
+void setupThias() {
+	animator.mode = Animator::ANIMATOR_CONSTANT;
+}
+
 void setupPartyraum() {
 	/* setup connection to RPi */
     Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
@@ -52,6 +56,8 @@ void setup() {
 	/* setup specifics for individual installation */
 #ifdef CONF_MAITE
 	setupMaite();
+#elif CONF_THIAS
+	setupThias();
 #else /* CONF_PARTYRAUM */
 	setupPartyraum();
 #endif

@@ -12,14 +12,14 @@ Buttons::Buttons() {
 
 void Buttons::handleButtons() {
 #ifdef SERIAL_PRINT
-	// Serial.printf("Touch button readings:\n");
+	Serial.printf("Touch button readings:\n");
 #endif
 
-#if 0
+#if 1
 	for (int i = 0; i < TOUCH_BUTTON_COUNT; i++) {
 		uint16_t value = touchRead(buttons[i]);
 #ifdef SERIAL_PRINT
-	// Serial.printf("%02d ", value);
+	Serial.printf("%02d ", value);
 #endif
 
 		/* Reset if value is above TOUCH_BUTTON_THRESHOLD */
@@ -51,7 +51,7 @@ void Buttons::handleButtons() {
 #endif
 
 #ifdef SERIAL_PRINT
-	// Serial.printf("\n");
+	Serial.printf("\n");
 #endif
 
 #ifdef DEV_MODE
@@ -74,7 +74,7 @@ void Buttons::handleButtons() {
 void Buttons::activate(uint8_t button_pin) {
 	/* for now, simply define action here in a switch */
 #ifdef SERIAL_PRINT
-			Serial.printf("%lu: Button active: %d\n", millis(), button_pin);
+	Serial.printf("%lu: Button active: %d\n", millis(), button_pin);
 #endif
 
 	switch (button_pin) {
