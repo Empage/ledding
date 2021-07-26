@@ -1,0 +1,531 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Ledding Schematic"
+Date "2020-10-02"
+Rev "1"
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector_Generic:Conn_01x10 J4
+U 1 1 5F76F8A5
+P 1900 2000
+F 0 "J4" V 2117 1946 50  0000 C CNN
+F 1 "Upper Board" V 2026 1946 50  0000 C CNN
+F 2 "" H 1900 2000 50  0001 C CNN
+F 3 "~" H 1900 2000 50  0001 C CNN
+	1    1900 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L ESP32DEVKITV1:ESP32DEVKITV1 U1
+U 1 1 5F7A4FBD
+P 4050 3600
+F 0 "U1" V 4859 3600 50  0000 C CNN
+F 1 "ESP32DEVKITV1" H 4050 3600 50  0001 L BNN
+F 2 "ESP32-DEVKITV1:ESP32-DEVKITV1" H 4050 3600 50  0001 L BNN
+F 3 "" H 4050 3600 50  0001 C CNN
+	1    4050 3600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x02 J1
+U 1 1 5F7C4D16
+P 6800 1300
+F 0 "J1" H 6880 1246 50  0000 L CNN
+F 1 "PWR" H 6900 1150 50  0000 L CNN
+F 2 "" H 6800 1300 50  0001 C CNN
+F 3 "~" H 6800 1300 50  0001 C CNN
+	1    6800 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0102
+U 1 1 5F7D4836
+P 8150 4050
+F 0 "#PWR0102" H 8150 3800 50  0001 C CNN
+F 1 "GND" H 8155 3877 50  0000 C CNN
+F 2 "" H 8150 4050 50  0001 C CNN
+F 3 "" H 8150 4050 50  0001 C CNN
+	1    8150 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 5F7D54DD
+P 6300 2450
+F 0 "#PWR0103" H 6300 2200 50  0001 C CNN
+F 1 "GND" H 6305 2277 50  0000 C CNN
+F 2 "" H 6300 2450 50  0001 C CNN
+F 3 "" H 6300 2450 50  0001 C CNN
+	1    6300 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0104
+U 1 1 5F7DE56A
+P 6450 1650
+F 0 "#PWR0104" H 6450 1400 50  0001 C CNN
+F 1 "GND" H 6455 1477 50  0000 C CNN
+F 2 "" H 6450 1650 50  0001 C CNN
+F 3 "" H 6450 1650 50  0001 C CNN
+	1    6450 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6450 1650 6450 1500
+Wire Wire Line
+	6450 1050 6450 1200
+$Comp
+L power:+5V #PWR0105
+U 1 1 5F7DFD8C
+P 6450 1050
+F 0 "#PWR0105" H 6450 900 50  0001 C CNN
+F 1 "+5V" H 6465 1223 50  0000 C CNN
+F 2 "" H 6450 1050 50  0001 C CNN
+F 3 "" H 6450 1050 50  0001 C CNN
+	1    6450 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0106
+U 1 1 5F7E721B
+P 7900 4100
+F 0 "#PWR0106" H 7900 3950 50  0001 C CNN
+F 1 "+5V" H 7915 4273 50  0000 C CNN
+F 2 "" H 7900 4100 50  0001 C CNN
+F 3 "" H 7900 4100 50  0001 C CNN
+	1    7900 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J2
+U 1 1 5F7F6F7D
+P 8350 1450
+F 0 "J2" V 8314 1262 50  0000 R CNN
+F 1 "Stripe Data" V 8223 1262 50  0000 R CNN
+F 2 "" H 8350 1450 50  0001 C CNN
+F 3 "~" H 8350 1450 50  0001 C CNN
+	1    8350 1450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+5V #PWR0107
+U 1 1 5F8092B7
+P 3000 4500
+F 0 "#PWR0107" H 3000 4350 50  0001 C CNN
+F 1 "+5V" H 3000 4650 50  0000 C CNN
+F 2 "" H 3000 4500 50  0001 C CNN
+F 3 "" H 3000 4500 50  0001 C CNN
+	1    3000 4500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5850 3900 4750 3900
+Wire Wire Line
+	5850 4000 4750 4000
+Text Notes 5500 3900 0    50   ~ 0
+UART TX
+Text Notes 5500 4000 0    50   ~ 0
+UART RX
+Wire Wire Line
+	3100 1700 2100 1700
+Wire Wire Line
+	2100 1800 3000 1800
+Wire Wire Line
+	3000 1800 3000 3600
+Wire Wire Line
+	3350 4000 2900 4000
+Wire Wire Line
+	2900 4000 2900 3150
+Wire Wire Line
+	2900 1900 2100 1900
+Wire Wire Line
+	3350 4100 2800 4100
+Wire Wire Line
+	2800 4100 2800 3150
+Wire Wire Line
+	2800 2000 2100 2000
+Wire Wire Line
+	3350 4200 2700 4200
+Wire Wire Line
+	2700 4200 2700 3150
+Wire Wire Line
+	2700 2100 2100 2100
+Text Notes 2150 1900 0    50   ~ 0
+LED 1 (green)
+Text Notes 2150 1600 0    50   ~ 0
+Button 2
+Text Notes 2150 1700 0    50   ~ 0
+Button 3
+Text Notes 2150 1800 0    50   ~ 0
+Button 4
+Wire Wire Line
+	3350 4300 2600 4300
+Wire Wire Line
+	2600 4300 2600 3150
+Wire Wire Line
+	2600 2200 2100 2200
+Text Notes 2150 2000 0    50   ~ 0
+LED 2 (green)
+$Comp
+L power:GND #PWR0108
+U 1 1 5F83F35E
+P 2250 2500
+F 0 "#PWR0108" H 2250 2250 50  0001 C CNN
+F 1 "GND" H 2255 2327 50  0000 C CNN
+F 2 "" H 2250 2500 50  0001 C CNN
+F 3 "" H 2250 2500 50  0001 C CNN
+	1    2250 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2250 2500 2250 2400
+Wire Wire Line
+	2250 2400 2100 2400
+Wire Wire Line
+	2100 1600 5100 1600
+Wire Wire Line
+	2100 1500 5200 1500
+Wire Wire Line
+	5200 1500 5200 4100
+Text Notes 4700 4200 0    50   ~ 0
+Internal LED
+Text Notes 2150 2100 0    50   ~ 0
+LED 3 (green)
+Text Notes 2150 2200 0    50   ~ 0
+LED 4 (green)
+$Comp
+L Device:R R1
+U 1 1 5F864478
+P 2600 3000
+F 0 "R1" H 2650 2850 50  0000 C CNN
+F 1 "100" V 2600 3000 50  0000 C CNN
+F 2 "" V 2530 3000 50  0001 C CNN
+F 3 "~" H 2600 3000 50  0001 C CNN
+	1    2600 3000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2600 2850 2600 2200
+$Comp
+L Device:R R2
+U 1 1 5F870073
+P 2700 3000
+F 0 "R2" H 2750 2850 50  0000 C CNN
+F 1 "100" V 2700 3000 50  0000 C CNN
+F 2 "" V 2630 3000 50  0001 C CNN
+F 3 "~" H 2700 3000 50  0001 C CNN
+	1    2700 3000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2700 2850 2700 2100
+$Comp
+L Device:R R3
+U 1 1 5F87039B
+P 2800 3000
+F 0 "R3" H 2850 2850 50  0000 C CNN
+F 1 "100" V 2800 3000 50  0000 C CNN
+F 2 "" V 2730 3000 50  0001 C CNN
+F 3 "~" H 2800 3000 50  0001 C CNN
+	1    2800 3000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2800 2850 2800 2000
+Wire Wire Line
+	2900 2850 2900 1900
+$Comp
+L Device:R R5
+U 1 1 5F87899E
+P 8250 1900
+F 0 "R5" V 8200 1750 50  0000 C CNN
+F 1 "150" V 8250 1900 50  0000 C CNN
+F 2 "" V 8180 1900 50  0001 C CNN
+F 3 "~" H 8250 1900 50  0001 C CNN
+	1    8250 1900
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R6
+U 1 1 5F8867E3
+P 8350 1900
+F 0 "R6" V 8300 1750 50  0000 C CNN
+F 1 "150" V 8350 1900 50  0000 C CNN
+F 2 "" V 8280 1900 50  0001 C CNN
+F 3 "~" H 8350 1900 50  0001 C CNN
+	1    8350 1900
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 5F886B0B
+P 8450 1900
+F 0 "R7" V 8400 1750 50  0000 C CNN
+F 1 "150" V 8450 1900 50  0000 C CNN
+F 2 "" V 8380 1900 50  0001 C CNN
+F 3 "~" H 8450 1900 50  0001 C CNN
+	1    8450 1900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	8450 1750 8450 1650
+Wire Wire Line
+	8250 1650 8250 1750
+Wire Wire Line
+	8350 1650 8350 1750
+Wire Wire Line
+	6300 2450 6300 2400
+Wire Wire Line
+	8150 3800 8150 3600
+Connection ~ 8150 3800
+Wire Wire Line
+	8150 4050 8150 3800
+Wire Wire Line
+	6300 2400 6600 2400
+Wire Wire Line
+	8150 3600 7800 3600
+Wire Wire Line
+	4750 3200 6600 3200
+Wire Wire Line
+	7800 3800 8150 3800
+Wire Wire Line
+	7900 4100 7800 4100
+$Comp
+L eec:SN74HCT245N U2
+U 1 1 5F79F433
+P 7900 4100
+F 0 "U2" H 8600 2135 50  0000 C CNN
+F 1 "SN74HCT245N" H 8600 2226 50  0000 C CNN
+F 2 "eec:Texas_Instruments-SN74HCT245N-0-0-MFG" H 7900 4500 50  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn74hct245.pdf" H 7900 4600 50  0001 L CNN
+F 4 "+85°C" H 7900 4700 50  0001 L CNN "ambient temperature range high"
+F 5 "-40°C" H 7900 4800 50  0001 L CNN "ambient temperature range low"
+F 6 "No" H 7900 4900 50  0001 L CNN "automotive"
+F 7 "IC" H 7900 5000 50  0001 L CNN "category"
+F 8 "Integrated Circuits (ICs)" H 7900 5100 50  0001 L CNN "device class L1"
+F 9 "Logic ICs" H 7900 5200 50  0001 L CNN "device class L2"
+F 10 "Drivers and Transceivers" H 7900 5300 50  0001 L CNN "device class L3"
+F 11 "IC TXRX NON-INVERT 5.5V 20DIP" H 7900 5400 50  0001 L CNN "digikey description"
+F 12 "296-1612-5-ND" H 7900 5500 50  0001 L CNN "digikey part number"
+F 13 "5.08mm" H 7900 5600 50  0001 L CNN "height"
+F 14 "DIP794W46P254L2540H508Q20" H 7900 5700 50  0001 L CNN "ipc land pattern name"
+F 15 "Yes" H 7900 5800 50  0001 L CNN "lead free"
+F 16 "64376d108c417d40" H 7900 5900 50  0001 L CNN "library id"
+F 17 "Non-Inverting" H 7900 6000 50  0001 L CNN "logic function desc"
+F 18 "Texas Instruments" H 7900 6100 50  0001 L CNN "manufacturer"
+F 19 "+150°C" H 7900 6200 50  0001 L CNN "max junction temp"
+F 20 "5.5V" H 7900 6300 50  0001 L CNN "max supply voltage"
+F 21 "4.5V" H 7900 6400 50  0001 L CNN "min supply voltage"
+F 22 "Bus Transceivers Tri-State Octal Bus" H 7900 6500 50  0001 L CNN "mouser description"
+F 23 "595-SN74HCT245N" H 7900 6600 50  0001 L CNN "mouser part number"
+F 24 "8-80uA" H 7900 6700 50  0001 L CNN "nominal supply current"
+F 25 "8" H 7900 6800 50  0001 L CNN "number of circuits"
+F 26 "2" H 7900 6900 50  0001 L CNN "number of inputs"
+F 27 "2" H 7900 7000 50  0001 L CNN "number of outputs"
+F 28 "PDIP20" H 7900 7100 50  0001 L CNN "package"
+F 29 "20ns" H 7900 7200 50  0001 L CNN "propagation delay"
+F 30 "Yes" H 7900 7300 50  0001 L CNN "rohs"
+F 31 "0.51mm" H 7900 7400 50  0001 L CNN "standoff height"
+F 32 "+85°C" H 7900 7500 50  0001 L CNN "temperature range high"
+F 33 "-40°C" H 7900 7600 50  0001 L CNN "temperature range low"
+	1    7900 4100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7800 3300 8450 3300
+Wire Wire Line
+	8450 2050 8450 3300
+Wire Wire Line
+	7800 3200 8350 3200
+Wire Wire Line
+	8350 2050 8350 3200
+Wire Wire Line
+	7800 3100 8250 3100
+Wire Wire Line
+	8250 2050 8250 3100
+Text Notes 4700 3700 0    50   ~ 0
+DevButton
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 5F8DE5CC
+P 6450 1300
+F 0 "#FLG0101" H 6450 1375 50  0001 C CNN
+F 1 "PWR_FLAG" H 6450 1473 50  0001 C CNN
+F 2 "" H 6450 1300 50  0001 C CNN
+F 3 "~" H 6450 1300 50  0001 C CNN
+	1    6450 1300
+	0    -1   -1   0   
+$EndComp
+NoConn ~ 7800 2600
+NoConn ~ 7800 2700
+NoConn ~ 7800 2800
+NoConn ~ 7800 2900
+NoConn ~ 7800 3000
+NoConn ~ 6600 2600
+NoConn ~ 6600 2700
+NoConn ~ 6600 2800
+NoConn ~ 6600 2900
+NoConn ~ 6600 3000
+NoConn ~ 4750 3300
+NoConn ~ 4750 3400
+NoConn ~ 4750 3600
+NoConn ~ 4750 3700
+NoConn ~ 4750 3800
+NoConn ~ 4750 4500
+NoConn ~ 3350 3900
+NoConn ~ 3350 3800
+NoConn ~ 3350 3500
+NoConn ~ 3350 3400
+NoConn ~ 3350 3300
+NoConn ~ 3350 3200
+NoConn ~ 3350 3100
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 5F90CF4A
+P 6450 1400
+F 0 "#FLG0102" H 6450 1475 50  0001 C CNN
+F 1 "PWR_FLAG" H 6450 1573 50  0001 C CNN
+F 2 "" H 6450 1400 50  0001 C CNN
+F 3 "~" H 6450 1400 50  0001 C CNN
+	1    6450 1400
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6450 1300 6600 1300
+Connection ~ 6450 1300
+Wire Wire Line
+	6450 1400 6600 1400
+Connection ~ 6450 1400
+NoConn ~ 4750 4200
+Wire Wire Line
+	3000 4500 3350 4500
+$Comp
+L Device:CP C1
+U 1 1 5F7A73FF
+P 5950 1350
+F 0 "C1" H 6068 1396 50  0000 L CNN
+F 1 "10µF" H 6068 1305 50  0000 L CNN
+F 2 "" H 5988 1200 50  0001 C CNN
+F 3 "~" H 5950 1350 50  0001 C CNN
+	1    5950 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5950 1500 6450 1500
+Connection ~ 6450 1500
+Wire Wire Line
+	6450 1500 6450 1400
+Wire Wire Line
+	5950 1200 6450 1200
+Connection ~ 6450 1200
+Wire Wire Line
+	6450 1200 6450 1300
+$Comp
+L power:GND #PWR0101
+U 1 1 5F7CC7B9
+P 3200 4650
+F 0 "#PWR0101" H 3200 4400 50  0001 C CNN
+F 1 "GND" H 3205 4477 50  0000 C CNN
+F 2 "" H 3200 4650 50  0001 C CNN
+F 3 "" H 3200 4650 50  0001 C CNN
+	1    3200 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 2300 2250 2300
+Wire Wire Line
+	2250 2300 2250 2400
+Connection ~ 2250 2400
+$Comp
+L Device:R R4
+U 1 1 5F8706D5
+P 2900 3000
+F 0 "R4" H 2950 2850 50  0000 C CNN
+F 1 "100" V 2900 3000 50  0000 C CNN
+F 2 "" V 2830 3000 50  0001 C CNN
+F 3 "~" H 2900 3000 50  0001 C CNN
+	1    2900 3000
+	-1   0    0    1   
+$EndComp
+Text Notes 2150 1500 0    50   ~ 0
+Button 1
+$Comp
+L Connector_Generic:Conn_01x03 J3
+U 1 1 6013BDB3
+P 6050 4000
+F 0 "J3" H 6200 3950 50  0000 R CNN
+F 1 "RPi Serial / Boot Btn" H 6450 3800 50  0000 R CNN
+F 2 "" H 6050 4000 50  0001 C CNN
+F 3 "~" H 6050 4000 50  0001 C CNN
+	1    6050 4000
+	1    0    0    -1  
+$EndComp
+Text Notes 1400 2400 0    50   ~ 0
+Black
+Text Notes 1400 2300 0    50   ~ 0
+Brown
+Text Notes 1400 2200 0    50   ~ 0
+Red
+Text Notes 1400 2100 0    50   ~ 0
+Orange
+Text Notes 1400 2000 0    50   ~ 0
+Yellow
+Text Notes 1400 1900 0    50   ~ 0
+Green
+Text Notes 1400 1800 0    50   ~ 0
+Blue
+Text Notes 1400 1700 0    50   ~ 0
+Purple
+Text Notes 1400 1600 0    50   ~ 0
+Gray
+Text Notes 1400 1500 0    50   ~ 0
+White
+Wire Wire Line
+	5850 4100 5450 4100
+Wire Wire Line
+	5450 4100 5450 5100
+Wire Wire Line
+	5450 5100 4100 5100
+Wire Wire Line
+	4100 5100 4100 4600
+Text Notes 3900 4600 0    50   ~ 0
+BootBtn
+Wire Wire Line
+	5600 3300 5600 3100
+Wire Wire Line
+	5600 3100 4750 3100
+Wire Wire Line
+	5600 3300 6600 3300
+Wire Wire Line
+	6600 3100 6100 3100
+Wire Wire Line
+	6100 3500 4750 3500
+Wire Wire Line
+	6100 3100 6100 3500
+Wire Wire Line
+	3100 3700 3350 3700
+Wire Wire Line
+	3100 1700 3100 3700
+Wire Wire Line
+	3000 3600 3350 3600
+Wire Wire Line
+	3200 4650 3200 4400
+Wire Wire Line
+	3200 4400 3350 4400
+NoConn ~ 4750 4400
+Wire Wire Line
+	5100 4300 4750 4300
+Wire Wire Line
+	5100 1600 5100 4300
+Wire Wire Line
+	5200 4100 4750 4100
+$EndSCHEMATC

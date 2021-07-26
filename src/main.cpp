@@ -11,6 +11,10 @@ void setupMaite() {
 	animator.mode = Animator::ANIMATOR_CONSTANT;
 }
 
+void setupThias() {
+	animator.mode = Animator::ANIMATOR_CONSTANT;
+}
+
 void setupPartyraum() {
 	/* setup connection to RPi */
     Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
@@ -21,7 +25,7 @@ void setupPartyraum() {
 	soundEffect.configure(CRGB::Red);
 	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
 
-	animator.mode = Animator::ANIMATOR_SOUND;
+	animator.mode = Animator::ANIMATOR_CONSTANT;
 }
 
 void setup() {
@@ -44,16 +48,16 @@ void setup() {
 	animator.addEffect(Animator::ANIMATOR_BOLT, &boltEffect);
 	strobeEffect.configure(CRGB::White);//, 3, 50, 1000);
 	animator.addEffect(Animator::ANIMATOR_STROBE, &strobeEffect);
-	sparkleEffect.configure(CRGB::White);
+	sparkleEffect.configure(CRGB::White, true);
 	animator.addEffect(Animator::ANIMATOR_SPARKLE, &sparkleEffect);
 	meteorEffect.configure(CRGB::Blue);
 	animator.addEffect(Animator::ANIMATOR_METEOR, &meteorEffect);
-	
-    animator.mode = Animator::ANIMATOR_STROBE;
 
 	/* setup specifics for individual installation */
 #ifdef CONF_MAITE
 	setupMaite();
+#elif CONF_THIAS
+	setupThias();
 #else /* CONF_PARTYRAUM */
 	setupPartyraum();
 #endif

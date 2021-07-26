@@ -6,7 +6,7 @@ all: build
 build:
 	PLATFORMIO_BUILD_FLAGS=`./set-environment.sh build_flags` \
 	PLATFORMIO_UPLOAD_PORT=`./set-environment.sh cable_port` \
-	platformio -c vim run
+	platformio -c vim run -e cable
 
 # build project in debug configuration
 debug:
@@ -18,7 +18,7 @@ debug:
 upload:
 	PLATFORMIO_BUILD_FLAGS=`./set-environment.sh build_flags` \
 	PLATFORMIO_UPLOAD_PORT=`./set-environment.sh cable_port` \
-	platformio -c vim run --target upload
+	platformio -c vim run -e cable --target upload
 
 # build and upload (if no errors) using over-the-air upload
 ota:
@@ -38,11 +38,11 @@ clean:
 update:
 	platformio -c vim update
 
-# only update dependend libraries
+# only update dependend libraries (no target involvement)
 updateLibs:
 	platformio lib update
 
-# compile_commands.json e.g. for clangd autocompleter
+# compile_commands.json e.g. for clangd autocompleter (no target involvement)
 compilecommands:
 	platformio run -e ota --target compiledb && \
 	mv .pio/build/ota/compile_commands.json .

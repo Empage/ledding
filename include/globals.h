@@ -40,5 +40,7 @@ void decreaseBrightness();
  */
 int modulo(int a, int b);
 
+extern uint8_t LIN_EYE[];
+
 
 #endif /* end of include guard: GLOBALS_H */

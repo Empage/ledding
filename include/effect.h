@@ -28,9 +28,16 @@ public:
 
 class EffectBolt : public Effect {
 public:
+	/*! \brief Configure the bolt
+	 *
+	 * \param startled
+	 * \param speed speed in 1/32 steps
+	 */
 	void configure(uint16_t startled, int8_t speed, CRGB color, uint16_t delay);
 
 	bool calcNextFrame() override;
+	void incIntensity() override;
+	void decIntensity() override;
 
 private:
 	int idx;
@@ -38,7 +45,6 @@ private:
 	uint16_t delay;
 	CRGB color;
 
-	int counter = 0;
 	int coloridx = 0;
 };
 
@@ -121,14 +127,20 @@ private:
 };
 
 class EffectSparkle : public Effect {
-    public:
-        void configure(CRGB color);
-        bool calcNextFrame() override;
+	public:
+		void configure(CRGB color, bool soft);
+		bool calcNextFrame() override;
 
-    private:
-        CRGB color;
-        int count = 0;
-        int pixel;
+	private:
+		/*! \brief Number of simultaneous sparkles */
+		static const int CNT = 64;
+
+		CRGB color;
+		int count[CNT] = {0};
+		int pixel[CNT] = {0};
+
+		/*! \brief Softer version of the effect (mainly for Maite) */
+		bool soft;
 };
 
 /*! \brief Effect for meteors */

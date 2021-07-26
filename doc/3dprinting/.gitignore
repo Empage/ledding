@@ -1,0 +1,4 @@
+# FreeCad backup files
+*.FCStd1
+# 3D printer print instructions
+*.gcode
