@@ -54,8 +54,8 @@ def arduino_soundlight():
 
     p = pyaudio.PyAudio()
     stream = p.open(format = pyaudio.paInt16,
-                    channels = 2,
-                    rate = 44100,
+                    channels = 1,
+                    rate = 48000,
                     input = True,
                     frames_per_buffer = chunk,
                     input_device_index = device)
