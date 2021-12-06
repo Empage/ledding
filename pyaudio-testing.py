@@ -47,6 +47,7 @@ def arduino_soundlight():
     MAX = 0
     num_leds = 480 #Thats how my LEDs we have
     double = True
+    print("Using Device: %s" % device)
     if double:
         num_leds = num_leds / 2# + 4
     else:
@@ -140,5 +141,5 @@ def calculate_levels(data, chunk, samplerate, num_leds):
 
 if __name__ == '__main__':
 
-    #list_devices()
+    list_devices()
     arduino_soundlight()
