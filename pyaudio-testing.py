@@ -45,7 +45,7 @@ def arduino_soundlight():
     # Use list_devices() to list all your input devices
     device   = 0 # Original
     MAX = 0
-    num_leds = 148 #Thats how my LEDs we have
+    num_leds = 480 #Thats how my LEDs we have
     double = True
     if double:
         num_leds = num_leds / 2# + 4
