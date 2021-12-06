@@ -44,7 +44,6 @@ def arduino_soundlight():
     # to make you sound output an input
     # Use list_devices() to list all your input devices
     device   = 0 # Original
-    MAX = 0
     num_leds = 480 #Thats how my LEDs we have
     double = True
     print("Using Device: %s" % device)
@@ -107,7 +106,6 @@ def arduino_soundlight():
 
 def calculate_levels(data, chunk, samplerate, num_leds):
     # Use FFT to calculate volume for each frequency
-    global MAX
 
     # Convert raw sound data to Numpy array
     fmt = "%dH"%(len(data)/2)
