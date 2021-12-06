@@ -85,7 +85,7 @@ def arduino_soundlight():
 
             # Make it look better and send to serial
             for index, level in enumerate(levels[2:]):
-                level = int(level**4.0)
+                level = int(level**exponent)
 
                 if level >= 255:
                     level = 254
