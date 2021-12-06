@@ -78,10 +78,10 @@ def arduino_soundlight():
 
             levels = new
 
-            peak = abs(int(sum(levels)-(num_leds*2)))**3.0
-            peak = int(peak / 100000 / 2.5)
-            if peak > ( num_leds * 2 ) or peak > 254:
-                peak = num_leds * 2
+            # peak = abs(int(sum(levels)-(num_leds*2)))**3.0
+            # peak = int(peak / 100000 / 2.5)
+            # if peak > ( num_leds * 2 ) or peak > 254:
+            #     peak = num_leds * 2
 
             # Make it look better and send to serial
             for index, level in enumerate(levels[2:]):
