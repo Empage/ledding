@@ -63,7 +63,7 @@ def arduino_soundlight():
     print "Starting, use Ctrl+C to stop"
     try:
         ser = serial.Serial(
-            port='/dev/ttyAMA0',
+            port='/dev/serial0',
             baudrate = 115200,
             timeout = 5,
         )
