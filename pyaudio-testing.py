@@ -36,7 +36,7 @@ def arduino_soundlight():
     print "Starting Arduino Soundlight"
     chunk      = 2**11 # Change if too fast/slow, never less than 2**11
     scale      = 26    # Change if too dim/bright
-    exponent   = 1     # Change if too little/too much difference between loud and quiet sounds
+    exponent   = 2.5     # Change if too little/too much difference between loud and quiet sounds
     samplerate = 44100
 
     # CHANGE THIS TO CORRECT INPUT DEVICE
