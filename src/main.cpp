@@ -42,9 +42,11 @@ void setupPartyraum() {
 
 void setup() {
 	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
+	FastLED.addLeds<WS2812B, LED_DATA_PIN2, GRB>(leds + NUM_LEDS, NUM_LEDS);
 	FastLED.setBrightness(DEF_GLOBAL_BRIGHTNESS);
 	FastLED.setDither();
     fill_solid(leds, NUM_LEDS, CRGB::Black);
+    fill_solid(leds + NUM_LEDS, NUM_LEDS, CRGB::Red);
     FastLED.show();
 
 	pinMode(BUILTIN_LED, OUTPUT);

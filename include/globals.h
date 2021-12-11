@@ -11,7 +11,7 @@
 #include "effect.h"
 
 /*! \brief FastLED array for the current stripe values */
-extern CRGB leds[NUM_LEDS];
+extern CRGB leds[NUM_LEDS * 2];
 
 extern Animator animator;
 extern Buttons buttons;

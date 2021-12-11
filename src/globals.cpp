@@ -1,6 +1,6 @@
 #include "globals.h"
 
-CRGB leds[NUM_LEDS];
+CRGB leds[NUM_LEDS * 2];
 Animator animator;
 Buttons buttons;
 Ota ota;

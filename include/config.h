@@ -13,7 +13,7 @@
 /* dynamic configuration */
 /*************************/
 /*! \brief Print all actions on serial */
-//#define SERIAL_PRINT
+#define SERIAL_PRINT
 
 /*! \brief Activate developing mode, currently
  * - extra button on dev board
@@ -34,6 +34,7 @@ extern const char* OTA_PW;
 /* for pin configuration, please check doc/pinout_maite.ods */
 /*! \brief GPIO on which the data signal of the WS2812B is connected */
 #define LED_DATA_PIN 23
+#define LED_DATA_PIN2 22
 
 /*! \brief GPIO for the built-in LED */
 #define BUILTIN_LED 2

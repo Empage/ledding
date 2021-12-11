@@ -28,6 +28,7 @@ bool EffectBolt::calcNextFrame() {
 
 	if (delay) {
 		fadeToBlackBy(leds, NUM_LEDS, 32);
+		fadeToBlackBy(leds + NUM_LEDS, NUM_LEDS, 32);
 		delay--;
 		return true;
 	}
@@ -42,9 +43,11 @@ bool EffectBolt::calcNextFrame() {
 //		leds[ledpos] += CHSV(0, 255, 255);
 		for (int i = 0; i <= ledpos; i++) {
 			leds[i] += CHSV(0, 255, 255);
+			leds[NUM_LEDS + i] += CHSV(0, 255, 255);
 		}
 	} else {
 		leds[ledpos + 1] += CHSV(0, 255, LIN_EYE[frac]);
+		leds[NUM_LEDS + ledpos + 1] += CHSV(0, 255, LIN_EYE[frac]);
 	}
 
 #if 0
@@ -68,6 +71,7 @@ bool EffectBolt::calcNextFrame() {
 	if (speed > 0 && idx >= (NUM_LEDS - 1) * 32) {
 		Serial.println("Start from beginning");
 		fill_solid(leds, NUM_LEDS, CRGB::Black);
+		fill_solid(leds + NUM_LEDS, NUM_LEDS, CRGB::Black);
 		idx = 0;
 		if (++coloridx >= COLOR_PALETTE_SIZE) {
 			coloridx = 0;
@@ -108,6 +112,7 @@ bool EffectStatic::calcNextFrame() {
 		default:
 			for (int i = 0; i < NUM_LEDS; i++) {
 				leds[i] = color[0];
+				leds[NUM_LEDS + i] = color[0];
 			}
 			break;
 
@@ -115,7 +120,9 @@ bool EffectStatic::calcNextFrame() {
 		case 1: {
 			for (int i = 0; i < NUM_LEDS - 1 ; i += 2) {
 				leds[i] = color[0];
+				leds[NUM_LEDS + i] = color[0];
 				leds[i + 1] = color[1];
+				leds[NUM_LEDS + i + 1] = color[1];
 			}
 			break;
 
@@ -124,8 +131,11 @@ bool EffectStatic::calcNextFrame() {
 		case 2:
 			for (int i = 0; i < NUM_LEDS - 2 ; i += 3) {
 				leds[i] = color[0];
+				leds[NUM_LEDS + i] = color[0];
 				leds[i + 1] = color[1];
+				leds[NUM_LEDS + i + 1] = color[1];
 				leds[i + 2] = color[2];
+				leds[NUM_LEDS + i + 2] = color[2];
 			}
 			break;
 	}
@@ -186,12 +196,14 @@ bool EffectArc::calcNextFrame() {
 
 	for (int i = ARC_INITIAL_PAUSE; i < ARC_NUMBER + ARC_INITIAL_PAUSE; i++) {
 		leds[i] = switchColor ? color2 : color1;
+		leds[NUM_LEDS + i] = switchColor ? color2 : color1;
 	}
 	for (int i = ARC_INITIAL_PAUSE + ARC_NUMBER + ARC_PAUSE;
 		i < ARC_NUMBER * 2 + ARC_INITIAL_PAUSE + ARC_PAUSE;
 		i++
 	) {
 		leds[i] = switchColor ? color1 : color2;
+		leds[NUM_LEDS + i] = switchColor ? color1 : color2;
 	}
 
 	switchColor = !switchColor;
@@ -230,6 +242,7 @@ bool EffectSound::calcNextFrame() {
 				return true;
 			}
             leds[currentLED].setRGB(value, 0, 0);
+            leds[NUM_LEDS + currentLED].setRGB(value, 0, 0);
 			currentLED++;
 		}
 	}
@@ -251,14 +264,17 @@ bool EffectStrobe::calcNextFrame() {
     }
     if ( count >= 100 ) {
 		fill_solid(leds, NUM_LEDS, CRGB::Black);
+		fill_solid(leds + NUM_LEDS, NUM_LEDS, CRGB::Black);
         return true;
     }
     if ( count % 6 >= 3) {
 		fill_solid(leds, NUM_LEDS, color);
+		fill_solid(leds + NUM_LEDS, NUM_LEDS, color);
         return true;
     }
     if ( count % 6 <= 3 ) {
 		fill_solid(leds, NUM_LEDS, CRGB::Black);
+		fill_solid(leds + NUM_LEDS, NUM_LEDS, CRGB::Black);
         return true;
     }
     return false;
@@ -280,8 +296,10 @@ bool EffectSparkle::calcNextFrame() {
 	/* catch a mode change */
 	if (draw) {
 		fill_solid(leds, NUM_LEDS, CRGB::Black);
+		fill_solid(leds + NUM_LEDS, NUM_LEDS, CRGB::Black);
 		for (int i = 0; i < NUM_LEDS; i++) {
 			leds[i] += CRGB(50, 0, 0);
+			leds[NUM_LEDS + i] += CRGB(50, 0, 0);
 		}
 		draw = false;
 	}
@@ -302,19 +320,23 @@ bool EffectSparkle::calcNextFrame() {
 				Serial.printf("LIGHT UP %d\n", pixel[i]);
 				/* slowly light it up */
 				leds[pixel[i]].setHSV(170, 255, count[i] * 4);
+				leds[NUM_LEDS + pixel[i]].setHSV(170, 255, count[i] * 4);
 				continue;
 			}
 			if (count[i] < 128) {
 				Serial.printf("DIM %d\n", pixel[i]);
 				/* slowly dim it down */
 				leds[pixel[i]].setHSV(170, 255, (127 - count[i]) * 4);
+				leds[NUM_LEDS + pixel[i]].setHSV(170, 255, (127 - count[i]) * 4);
 				continue;
 			}
 			
 			Serial.printf("KILL %d\n", pixel[i]);
 			/* sparkle gone, schedule next */
 			leds[pixel[i]] = 0;
+			leds[NUM_LEDS + pixel[i]] = 0;
 			leds[pixel[i]] = CRGB(50, 0, 0);
+			leds[NUM_LEDS + pixel[i]] = CRGB(50, 0, 0);
 			count[i] = random(50) * -1;
 		}
 
@@ -324,11 +346,13 @@ bool EffectSparkle::calcNextFrame() {
 		if ( count[0] == 0 ) {
 			pixel[0] = random(NUM_LEDS);
 			leds[pixel[0]] = color;
+			leds[NUM_LEDS + pixel[0]] = color;
 			count[0]++;
 			return true;
 		}
 		if ( count[0] >= 1 ) {
 			leds[pixel[0]] = CRGB::Black;
+			leds[NUM_LEDS + pixel[0]] = CRGB::Black;
 			count[0] = 0;
 			return true;
 		}
@@ -345,12 +369,14 @@ bool EffectMeteor::calcNextFrame() {
         for ( int j = 0; j < NUM_LEDS; j++ ) {
             if ( random(10) > 5 ) {
                 leds[j].fadeToBlackBy(64);
+                leds[NUM_LEDS + j].fadeToBlackBy(64);
             }
         }
 
         for ( int j = 0; j < 10; j++ ) {
             if (( i-j < NUM_LEDS) && ( i-j >= 0 )) {
                 leds[i-j] = CRGB::Green;
+                leds[NUM_LEDS + i-j] = CRGB::Green;
             }
         }
         i++;
@@ -359,6 +385,7 @@ bool EffectMeteor::calcNextFrame() {
     } else {
         i = 0;
 		fill_solid(leds, NUM_LEDS, CRGB::Black);
+		fill_solid(NUM_LEDS + leds, NUM_LEDS, CRGB::Black);
         return true;
     }
 }
