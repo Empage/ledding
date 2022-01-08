@@ -6,6 +6,7 @@
 .clangd
 compile_commands.json
 env-maite
+env-superbjorn
 env-matthis
 env-thias
 session.nvim

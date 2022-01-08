@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # Python 2.7 code to analyze sound and interface with Arduino
 
 import pyaudio # from http://people.csail.mit.edu/hubert/pyaudio/
@@ -36,7 +36,7 @@ def arduino_soundlight():
     print "Starting Arduino Soundlight"
     chunk      = 2**11 # Change if too fast/slow, never less than 2**11
     scale      = 26    # Change if too dim/bright
-    exponent   = 1     # Change if too little/too much difference between loud and quiet sounds
+    exponent   = 2.5     # Change if too little/too much difference between loud and quiet sounds
     samplerate = 44100
 
     # CHANGE THIS TO CORRECT INPUT DEVICE
@@ -44,9 +44,9 @@ def arduino_soundlight():
     # to make you sound output an input
     # Use list_devices() to list all your input devices
     device   = 0 # Original
-    MAX = 0
-    num_leds = 148 #Thats how my LEDs we have
+    num_leds = 480 #Thats how my LEDs we have
     double = True
+    print("Using Device: %s" % device)
     if double:
         num_leds = num_leds / 2# + 4
     else:
@@ -54,8 +54,8 @@ def arduino_soundlight():
 
     p = pyaudio.PyAudio()
     stream = p.open(format = pyaudio.paInt16,
-                    channels = 2,
-                    rate = 44100,
+                    channels = 1,
+                    rate = 48000,
                     input = True,
                     frames_per_buffer = chunk,
                     input_device_index = device)
@@ -63,7 +63,7 @@ def arduino_soundlight():
     print "Starting, use Ctrl+C to stop"
     try:
         ser = serial.Serial(
-            port='/dev/ttyAMA0',
+            port='/dev/serial0',
             baudrate = 115200,
             timeout = 5,
         )
@@ -77,14 +77,14 @@ def arduino_soundlight():
 
             levels = new
 
-            peak = abs(int(sum(levels)-(num_leds*2)))**3.0
-            peak = int(peak / 100000 / 2.5)
-            if peak > ( num_leds * 2 ) or peak > 254:
-                peak = num_leds * 2
+            # peak = abs(int(sum(levels)-(num_leds*2)))**3.0
+            # peak = int(peak / 100000 / 2.5)
+            # if peak > ( num_leds * 2 ) or peak > 254:
+            #     peak = num_leds * 2
 
             # Make it look better and send to serial
             for index, level in enumerate(levels[2:]):
-                level = int(level**4.0)
+                level = int(level**exponent)
 
                 if level >= 255:
                     level = 254
@@ -106,7 +106,6 @@ def arduino_soundlight():
 
 def calculate_levels(data, chunk, samplerate, num_leds):
     # Use FFT to calculate volume for each frequency
-    global MAX
 
     # Convert raw sound data to Numpy array
     fmt = "%dH"%(len(data)/2)
@@ -140,5 +139,5 @@ def calculate_levels(data, chunk, samplerate, num_leds):
 
 if __name__ == '__main__':
 
-    #list_devices()
+    list_devices()
     arduino_soundlight()

@@ -78,4 +78,4 @@ lease_time: 864000  # That's how many seconds are in 10 days
 #  |
 #  |     `disable_wmm`: Set to `True` to disable QoS
 #  |
-disable_wmm: True
+disable_wmm: False
