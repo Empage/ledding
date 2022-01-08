@@ -15,6 +15,7 @@ void setupThias() {
 	animator.mode = Animator::ANIMATOR_CONSTANT;
 }
 
+#ifdef CONF_PARTYRAUM
 void setupPartyraum() {
 	/* setup connection to RPi */
     Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
@@ -25,8 +26,19 @@ void setupPartyraum() {
 	soundEffect.configure(CRGB::Red);
 	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
 
-	animator.mode = Animator::ANIMATOR_CONSTANT;
+	animator.mode = Animator::ANIMATOR_SOUND;
+
+	pinMode(STATUS_LED_1, OUTPUT);
+	pinMode(STATUS_LED_2, OUTPUT);
+	pinMode(STATUS_LED_3, OUTPUT);
+	pinMode(STATUS_LED_4, OUTPUT);
+
+	digitalWrite(STATUS_LED_1, LOW);
+	digitalWrite(STATUS_LED_2, LOW);
+	digitalWrite(STATUS_LED_3, LOW);
+	digitalWrite(STATUS_LED_4, LOW);
 }
+#endif /* CONF_PARTYRAUM */
 
 void setup() {
 	FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -58,7 +70,7 @@ void setup() {
 	setupMaite();
 #elif CONF_THIAS
 	setupThias();
-#else /* CONF_PARTYRAUM */
+#elif CONF_PARTYRAUM
 	setupPartyraum();
 #endif
 
@@ -81,22 +93,4 @@ void loop() {
 	EVERY_N_MILLISECONDS(BUTTON_CHECK_RES) {
 		buttons.handleButtons();
 	}
-}
-
-void blur() {
-
-	uint8_t blurAmount = dim8_raw( beatsin8(3,64, 192) );
-	blur1d( leds, NUM_LEDS, blurAmount);
-
-	uint8_t  i = beatsin8(  9, 0, NUM_LEDS);
-	uint8_t  j = beatsin8( 7, 0, NUM_LEDS);
-	uint8_t  k = beatsin8(  5, 0, NUM_LEDS);
-
-	// The color of each point shifts over time, each at a different speed.
-	uint16_t ms = millis();
-	leds[(i+j)/2] = CHSV( ms / 29, 200, 255);
-	leds[(j+k)/2] = CHSV( ms / 41, 200, 255);
-	leds[(k+i)/2] = CHSV( ms / 73, 200, 255);
-	leds[(k+i+j)/3] = CHSV( ms / 53, 200, 255);
-	FastLED.show();
 }

@@ -44,8 +44,8 @@ updateLibs:
 
 # compile_commands.json e.g. for clangd autocompleter (no target involvement)
 compilecommands:
-	platformio run -e ota --target compiledb && \
-	mv .pio/build/ota/compile_commands.json .
+	platformio run -e cable --target compiledb && \
+	mv .pio/build/cable/compile_commands.json .
 
 # start serial console for ESP32 output
 monitor:
