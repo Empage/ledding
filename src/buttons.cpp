@@ -206,7 +206,8 @@ void Buttons::activatePullDown(uint8_t button_pin) {
 			break;
 
 		case BUTTON_INTENSITY_INC:
-			animator.incIntensity();
+			ESP.restart();
+//			animator.incIntensity();
 			break;
 
 		case BUTTON_COLOR_NEXT:
