@@ -256,7 +256,6 @@ void EffectStrobe::configure(CRGB color) { //, uint8_t count, uint8_t flashDelay
 
 bool EffectStrobe::calcNextFrame() {
     count++;
-    Serial.println(count);
     if ( count >= 200 ) {
         count = 0;
 		this->color = COLOR_PALETTE[random(COLOR_PALETTE_SIZE)];
