@@ -44,8 +44,8 @@ updateLibs:
 
 # compile_commands.json e.g. for clangd autocompleter (no target involvement)
 compilecommands:
-	platformio run -e cable --target compiledb && \
-	mv .pio/build/cable/compile_commands.json .
+	PLATFORMIO_BUILD_FLAGS=`./set-environment.sh build_flags` \
+	platformio run -e cable --target compiledb
 
 # start serial console for ESP32 output
 monitor:
