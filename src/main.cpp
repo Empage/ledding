@@ -18,7 +18,8 @@ void setupThias() {
 #ifdef CONF_PARTYRAUM
 void setupPartyraum() {
 	/* setup connection to RPi */
-    Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
+	Serial2.begin(115200, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
+	// Serial2.begin(230400, SERIAL_8N1, SERIAL_TO_RPI_RXD2, SERIAL_TO_RPI_TXD2);
 
 	/* setup partyraum specifc effects */
 	arcEffect.configure(CRGB::Blue, CRGB::Green);
@@ -27,6 +28,7 @@ void setupPartyraum() {
 	animator.addEffect(Animator::ANIMATOR_SOUND, &soundEffect);
 
 	animator.mode = Animator::ANIMATOR_SOUND;
+	// animator.mode = Animator::ANIMATOR_STROBE;
 
 	pinMode(STATUS_LED_1, OUTPUT);
 	pinMode(STATUS_LED_2, OUTPUT);
@@ -62,8 +64,9 @@ void setup() {
 	animator.addEffect(Animator::ANIMATOR_BOLT, &boltEffect);
 	strobeEffect.configure(CRGB::White);//, 3, 50, 1000);
 	animator.addEffect(Animator::ANIMATOR_STROBE, &strobeEffect);
-	sparkleEffect.configure(CRGB::White, true);
-	animator.addEffect(Animator::ANIMATOR_SPARKLE, &sparkleEffect);
+	// TODO Sparkle Effect crashes, investigate
+	// sparkleEffect.configure(CRGB::White, true);
+	// animator.addEffect(Animator::ANIMATOR_SPARKLE, &sparkleEffect);
 	meteorEffect.configure(CRGB::Blue);
 	animator.addEffect(Animator::ANIMATOR_METEOR, &meteorEffect);
 

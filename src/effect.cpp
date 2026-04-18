@@ -213,6 +213,7 @@ bool EffectArc::calcNextFrame() {
 
 /*********************** Effect Sound *************************/
 void EffectSound::configure(CRGB color) {
+	Serial.printf("Effect PI selected\n");
 	this->color = color;
 
 	is_new_color = true;
@@ -224,6 +225,7 @@ bool EffectSound::calcNextFrame() {
 	for (int i = 0; i < NUM_LEDS; i++) {
 		if (Serial2.available()) {
 			uint8_t value = Serial2.read();
+			// Serial.printf("Pi data available. LED %d: %d\n", currentLED, value);
 			if ( value == 255) {
 				currentLED = 0;
 				/*  Keep this for Peak Output
@@ -240,6 +242,10 @@ bool EffectSound::calcNextFrame() {
 
 				Serial2.write(84);
 				return true;
+			}
+			if (currentLED >= NUM_LEDS) {
+				currentLED = 0;
+				Serial.printf("Pi: Sync error, resetting currentLED to 0\n");
 			}
             leds[currentLED].setRGB(value, 0, 0);
             leds[NUM_LEDS + currentLED].setRGB(value, 0, 0);
